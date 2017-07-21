@@ -1,20 +1,67 @@
 #include "Frame.h"
 
-Frame::Frame(Image* image, vector<Hitbox*> hitboxes, vector<Hitbox*> hurtboxes, int duration)
+Frame::Frame(Character*character, Move* move, Node* frame_node)
 {
-    this->image = image;
-    this->hitboxes = hitboxes;
-    this->hurtboxes = hurtboxes;
-    this->duration = duration;
+    this->character = character;
+    this->move = move;
+
     this->restart();
+
+    this->image = rosalila()->graphics->getTexture(assets_directory+frame_node->attributes["image"]);
+
+    Node* hitboxes_node = frame_node->getNodeByName("Hitboxes");
+    Node* hurtboxes_node = frame_node->getNodeByName("Hurtboxes");
+
+    if(hitboxes_node)
+    {
+        vector<Node*> hitbox_nodes = hitboxes_node->getNodesByName("Hitbox");
+        for(int j=0;j< (int)hitbox_nodes.size();j++)
+        {
+            int x = atoi(hitbox_nodes[j]->attributes["x"].c_str());
+            int y = atoi(hitbox_nodes[j]->attributes["y"].c_str());
+            int width = atoi(hitbox_nodes[j]->attributes["width"].c_str());
+            int height = atoi(hitbox_nodes[j]->attributes["height"].c_str());
+            int angle = atoi(hitbox_nodes[j]->attributes["angle"].c_str());
+            this->hitboxes.push_back(new Hitbox(x,y,width,height,angle) );
+        }
+    }
+
+    if(hurtboxes_node)
+    {
+        vector<Node*> hurtbox_nodes = hurtboxes_node->getNodesByName("Hurtbox");
+
+        for(int j=0;j< (int)hurtbox_nodes.size();j++)
+        {
+            int x = atoi(hurtbox_nodes[j]->attributes["x"].c_str());
+            int y = atoi(hurtbox_nodes[j]->attributes["y"].c_str());
+            int width = atoi(hurtbox_nodes[j]->attributes["width"].c_str());
+            int height = atoi(hurtbox_nodes[j]->attributes["height"].c_str());
+            int angle = atoi(hurtbox_nodes[j]->attributes["angle"].c_str());
+            this->hurtboxes.push_back(new Hitbox(x,y,width,height,angle) );
+        }
+   }
+
+   this->duration = atoi(frame_node->attributes["duration"].c_str());
+
+   this->velocity_x = 0;
+   if(frame_node->hasAttribute("velocity_x"))
+   {
+       this->velocity_x = atoi(frame_node->attributes["velocity_x"].c_str());
+   }
+
+   this->velocity_y = 0;
+   if(frame_node->hasAttribute("velocity_y"))
+   {
+       this->velocity_y = atoi(frame_node->attributes["velocity_y"].c_str());
+   }
 }
 
-void Frame::draw(int x, bool flipped)
+void Frame::draw(int x, int y, bool flipped)
 {
     rosalila()->graphics->draw2DImage
     (   image,
         image->getWidth(),image->getHeight(),
-        x-image->getWidth()/2,620-image->getHeight(),
+        x-image->getWidth()/2,620-image->getHeight() - y,
         1.0,
         0.0,
         flipped,
@@ -52,9 +99,15 @@ void Frame::draw(int x, bool flipped)
 
 void Frame::logic()
 {
-    frame++;
     if(frame >= duration)
+    {
         finished = true;
+    }else
+    {
+        character->velocity_x = this->velocity_x;
+        character->velocity_y = this->velocity_y;
+    }
+    frame++;
 }
 
 void Frame::restart()

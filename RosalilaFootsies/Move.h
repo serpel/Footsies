@@ -6,6 +6,7 @@
 #include "Character.h"
 
 class Character;
+class Frame;
 
 class Move
 {
@@ -15,10 +16,9 @@ public:
     int tick;
     int current_frame;
     bool finished;
-    double velocity_x;
 
     Move(Character* character,Node* move_node);
-    void draw(int x, bool fipped);
+    void draw(int x, int y, bool fipped);
     void logic();
     void restart();
     bool isFinished();

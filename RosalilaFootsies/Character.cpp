@@ -1,20 +1,30 @@
 #include "Character.h"
 
-Character::Character(int player, int x)
+Character::Character(int player, int x, bool is_bot)
 {
 
-    Node* moves_node = rosalila()->parser->getNodes(assets_directory+"character/moves.xml");
-    vector<Node*> move_nodes = moves_node->getNodesByName("Move");
-    for(int i=0; i< (int)move_nodes.size(); i++)
+    Node* config_node = rosalila()->parser->getNodes(assets_directory+"character/config.xml");
+    vector<Node*> files_nodes = config_node->getNodeByName("MoveFiles")->getNodesByName("File");
+    for(int i=0; i< (int)files_nodes.size(); i++)
     {
-        moves[move_nodes[i]->attributes["name"]] = new Move(this,move_nodes[i]);
+        Node* moves_node = rosalila()->parser->getNodes(assets_directory+"character/" + files_nodes[i]->attributes["path"]);
+        vector<Node*> move_nodes = moves_node->getNodesByName("Move");
+        for(int i=0; i< (int)move_nodes.size(); i++)
+        {
+            moves[move_nodes[i]->attributes["name"]] = new Move(this,move_nodes[i]);
+        }
     }
 
     this->current_state = "idle";
     this->frame = 0;
     this->animation_frame = 0;
     this->x = x;
+    this->y = 0;
+    this->velocity_x = 0;
+    this->velocity_y = 0;
+
     button_up = false;
+    this->is_bot = is_bot;
 
     opponent = NULL;
     this->player = player;
@@ -24,7 +34,7 @@ Character::Character(int player, int x)
 void Character::draw()
 {
     Move* current_move = moves[this->current_state];
-    current_move->draw(this->x, this->isFlipped());
+    current_move->draw(this->x, this->y, this->isFlipped());
 }
 
 void Character::logic()
@@ -37,7 +47,21 @@ void Character::logic()
 
         bool left_pressed = rosalila()->receiver->isJoyDown(-4,player);
         bool right_pressed = rosalila()->receiver->isJoyDown(-6,player);
+        bool up_pressed = rosalila()->receiver->isJoyDown(-8,player);
         bool punch_pressed = rosalila()->receiver->isJoyDown(1,player);
+
+        if(is_bot)
+        {
+            int distance = abs(this->x-opponent->x);
+            left_pressed = true;
+            if(distance<231)
+                punch_pressed=true;
+        }else
+        {
+            left_pressed = rosalila()->receiver->isJoyDown(-4,player);
+            right_pressed = rosalila()->receiver->isJoyDown(-6,player);
+            punch_pressed = rosalila()->receiver->isJoyDown(1,player);
+        }
 
         if(this->isFlipped())
         {
@@ -52,15 +76,15 @@ void Character::logic()
         bool none_pressed = !left_pressed && !right_pressed && !punch_pressed;
 
 
-        if(none_pressed && 
+        if(none_pressed &&
                 (this->current_state == "walk_back" || this->current_state == "walk_forward") )
             cancel("idle");
 
-        if(left_pressed && 
+        if(left_pressed &&
                 (this->current_state == "idle" || this->current_state == "walk_forward") )
             cancel("walk_back");
 
-        if(right_pressed && 
+        if(right_pressed &&
                 (this->current_state == "idle" || this->current_state == "walk_back") )
             cancel("walk_forward");
 
@@ -70,6 +94,19 @@ void Character::logic()
             button_up = false;
             cancel("punch");
         }
+
+        if(button_up && up_pressed && this->current_state != "punch" &&
+                (this->current_state == "idle" || this->current_state == "walk_back" || this->current_state == "walk_forward") )
+        {
+            button_up = false;
+            cancel("jump_up");
+        }
+
+        if(this->isFlipped())
+            this->x -= velocity_x;
+        else
+            this->x += velocity_x;
+        this->y += velocity_y;
     }
 
     Move* current_move = moves[this->current_state];
@@ -78,6 +115,8 @@ void Character::logic()
 
 void Character::cancel(string new_state)
 {
+    this->velocity_x = 0;
+    this->velocity_y = 0;
     this->current_state=new_state;
     Move* new_move = moves[current_state];
     new_move->restart();

@@ -21,103 +21,97 @@
       </Hurtboxes>
     </Frame>
   </Move>
-
-  <Move name="on_hit" velocity_x="-4">
-    <Frame duration="7" image="character/on_hit/1.png">
-    </Frame>
-    <Frame duration="7" image="character/on_hit/2.png">
-    </Frame>
-    <Frame duration="7" image="character/on_hit/3.png">
-    </Frame>
-    <Frame duration="7" image="character/on_hit/4.png">
-    </Frame>
-    <Frame duration="7" image="character/on_hit/5.png">
-    </Frame>
-  </Move>
-
-  <Move name="punch">
-    <Frame duration="7" image="character/punch/1.png">
+  <Move name="walk_back">
+    <Frame duration="7" image="character/walk_back/1.png" velocity_x="-3">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="1" image="character/punch/2.png">
+    <Frame duration="7" image="character/walk_back/2.png" velocity_x="-3">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
-        <Hurtbox x="0" y="300" width="180" height="50" angle="0"/>
       </Hurtboxes>
-      <Hitboxes>
-        <Hitbox x="0" y="300" width="180" height="50" angle="0"/>
-      </Hitboxes>
     </Frame>
-    <Frame duration="6" image="character/punch/2.png">
+    <Frame duration="7" image="character/walk_back/3.png" velocity_x="-3">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
-        <Hurtbox x="0" y="300" width="180" height="50" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="7" image="character/punch/3.png">
+    <Frame duration="7" image="character/walk_back/4.png" velocity_x="-3">
+      <Hurtboxes>
+        <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
+      </Hurtboxes>
+    </Frame>
+    <Frame duration="7" image="character/walk_forward/4.png" velocity_x="-3">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
   </Move>
 
-  <Move name="walk_back" velocity_x="-3">
-    <Frame duration="7" image="character/walk_back/1.png">
+  <Move name="walk_forward">
+    <Frame duration="7" image="character/walk_forward/1.png" velocity_x="4">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="7" image="character/walk_back/2.png">
+    <Frame duration="7" image="character/walk_forward/2.png" velocity_x="4">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="7" image="character/walk_back/3.png">
+    <Frame duration="7" image="character/walk_forward/3.png" velocity_x="4">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="7" image="character/walk_back/4.png">
+    <Frame duration="7" image="character/walk_forward/4.png" velocity_x="4">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="7" image="character/walk_forward/4.png">
+    <Frame duration="7" image="character/walk_forward/5.png" velocity_x="4">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
   </Move>
 
-  <Move name="walk_forward" velocity_x="4">
-    <Frame duration="7" image="character/walk_forward/1.png">
+  <Move name="jump_up">
+    <Frame duration="2" image="character/jump_up/1.png" velocity_y="3">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="7" image="character/walk_forward/2.png">
+    <Frame duration="7" image="character/jump_up/2.png" velocity_y="3">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="7" image="character/walk_forward/3.png">
+    <Frame duration="7" image="character/jump_up/3.png" velocity_y="3">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="7" image="character/walk_forward/4.png">
+    <Frame duration="7" image="character/jump_up/4.png">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
-    <Frame duration="7" image="character/walk_forward/5.png">
+    <Frame duration="7" image="character/jump_up/5.png" velocity_y="-3">
+      <Hurtboxes>
+        <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
+      </Hurtboxes>
+    </Frame>
+    <Frame duration="7" image="character/jump_up/6.png" velocity_y="-3">
+      <Hurtboxes>
+        <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
+      </Hurtboxes>
+    </Frame>
+    <Frame duration="2" image="character/jump_up/7.png" velocity_y="-3">
       <Hurtboxes>
         <Hurtbox x="-50" y="350" width="100" height="350" angle="0"/>
       </Hurtboxes>
     </Frame>
   </Move>
 </Moves>
-
-
