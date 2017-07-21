@@ -22,6 +22,8 @@ Character::Character(int player, int x, bool is_bot)
     this->y = 0;
     this->velocity_x = 0;
     this->velocity_y = 0;
+    this->acceleration_x = 0;
+    this->acceleration_y = 0;
 
     button_up = false;
     this->is_bot = is_bot;
@@ -29,6 +31,9 @@ Character::Character(int player, int x, bool is_bot)
     opponent = NULL;
     this->player = player;
     game_started = false;
+
+    for(int i=0;i<20;i++)
+      input_buffer.push_back("5");
 }
 
 void Character::draw()
@@ -49,6 +54,16 @@ void Character::logic()
         bool right_pressed = rosalila()->receiver->isJoyDown(-6,player);
         bool up_pressed = rosalila()->receiver->isJoyDown(-8,player);
         bool punch_pressed = rosalila()->receiver->isJoyDown(1,player);
+
+        string input_pressed = "5";
+
+        if(left_pressed)
+          input_pressed = "4";
+        if(right_pressed)
+          input_pressed = "6";
+        if(up_pressed)
+          input_pressed = "8";
+
 
         if(is_bot)
         {
@@ -73,40 +88,56 @@ void Character::logic()
         if(!punch_pressed)
             button_up = true;
 
-        bool none_pressed = !left_pressed && !right_pressed && !punch_pressed;
+        input_buffer.pop_back();
+        input_buffer.push_front(input_pressed);
 
+        bool none_pressed = !left_pressed && !right_pressed && !punch_pressed && !up_pressed;
 
-        if(none_pressed &&
-                (this->current_state == "walk_back" || this->current_state == "walk_forward") )
+        if(none_pressed && this->moves["idle"]->canCancel(this->current_state))
             cancel("idle");
 
-        if(left_pressed &&
-                (this->current_state == "idle" || this->current_state == "walk_forward") )
+        if(left_pressed && this->moves["walk_back"]->canCancel(this->current_state))
             cancel("walk_back");
 
-        if(right_pressed &&
-                (this->current_state == "idle" || this->current_state == "walk_back") )
+        if(right_pressed && this->moves["walk_forward"]->canCancel(this->current_state))
             cancel("walk_forward");
 
-        if(button_up && punch_pressed && this->current_state != "punch" &&
-                (this->current_state == "idle" || this->current_state == "walk_back" || this->current_state == "walk_forward") )
+        if(button_up && punch_pressed && this->current_state != "punch" && this->moves["punch"]->canCancel(this->current_state))
         {
             button_up = false;
             cancel("punch");
         }
 
-        if(button_up && up_pressed && this->current_state != "punch" &&
-                (this->current_state == "idle" || this->current_state == "walk_back" || this->current_state == "walk_forward") )
+        if(button_up && up_pressed && this->current_state != "punch" && this->moves["jump_forward"]->canCancel(this->current_state))
         {
             button_up = false;
-            cancel("jump_up");
+            cancel("jump_forward");
         }
+
+        velocity_x += acceleration_x;
+        velocity_y += acceleration_y;
+
+        int last_y = y;
 
         if(this->isFlipped())
             this->x -= velocity_x;
         else
             this->x += velocity_x;
         this->y += velocity_y;
+
+        if(y<=0)
+        {
+          y = 0;
+          acceleration_y = 0;
+        }else
+        {
+          acceleration_y-=0.25;
+        }
+
+        if(last_y > 0 && y == 0)
+        {
+          cancel("idle");
+        }
     }
 
     Move* current_move = moves[this->current_state];

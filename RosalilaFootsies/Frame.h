@@ -21,8 +21,15 @@ public:
     vector<Hitbox*> hitboxes;
     vector<Hitbox*> hurtboxes;
 
-    int velocity_x;
-    int velocity_y;
+    double velocity_x;
+    double velocity_y;
+    bool velocity_x_changed;
+    bool velocity_y_changed;
+
+    double acceleration_x;
+    double acceleration_y;
+    bool acceleration_x_changed;
+    bool acceleration_y_changed;
 
     Frame(Character*character, Move* move, Node* frame_node);
     void draw(int x, int y, bool fipped);

@@ -16,12 +16,14 @@ public:
     int tick;
     int current_frame;
     bool finished;
+    vector<string> cancels;
 
     Move(Character* character,Node* move_node);
     void draw(int x, int y, bool fipped);
     void logic();
     void restart();
     bool isFinished();
+    bool canCancel(string move);
     Frame* getCurrentFrame();
 };
 

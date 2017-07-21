@@ -13,11 +13,14 @@ public:
     string current_state;
     int frame;
     int animation_frame;
+    list<string> input_buffer;
 
-    int x;
-    int y;
-    int velocity_x;
-    int velocity_y;
+    double x;
+    double y;
+    double velocity_x;
+    double velocity_y;
+    double acceleration_x;
+    double acceleration_y;
 
     Character* opponent;
     int player;

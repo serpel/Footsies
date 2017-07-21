@@ -43,16 +43,32 @@ Frame::Frame(Character*character, Move* move, Node* frame_node)
 
    this->duration = atoi(frame_node->attributes["duration"].c_str());
 
-   this->velocity_x = 0;
+   velocity_x_changed = false;
    if(frame_node->hasAttribute("velocity_x"))
    {
-       this->velocity_x = atoi(frame_node->attributes["velocity_x"].c_str());
+      velocity_x_changed = true;
+      this->velocity_x = atoi(frame_node->attributes["velocity_x"].c_str());
    }
 
-   this->velocity_y = 0;
+   velocity_y_changed = false;
    if(frame_node->hasAttribute("velocity_y"))
    {
-       this->velocity_y = atoi(frame_node->attributes["velocity_y"].c_str());
+      velocity_y_changed = true;
+      this->velocity_y = atoi(frame_node->attributes["velocity_y"].c_str());
+   }
+
+   acceleration_x_changed = false;
+   if(frame_node->hasAttribute("acceleration_x"))
+   {
+      acceleration_x_changed = true;
+      this->acceleration_x = atoi(frame_node->attributes["acceleration_x"].c_str());
+   }
+
+   acceleration_y_changed = false;
+   if(frame_node->hasAttribute("acceleration_y"))
+   {
+      acceleration_y_changed = true;
+      this->acceleration_y = atoi(frame_node->attributes["acceleration_y"].c_str());
    }
 }
 
@@ -102,11 +118,20 @@ void Frame::logic()
     if(frame >= duration)
     {
         finished = true;
-    }else
-    {
-        character->velocity_x = this->velocity_x;
-        character->velocity_y = this->velocity_y;
     }
+
+    if(frame==0)
+    {
+      if(velocity_x_changed)
+          character->velocity_x = this->velocity_x;
+      if(velocity_y_changed)
+          character->velocity_y = this->velocity_y;
+      if(acceleration_x_changed)
+          character->acceleration_x = this->acceleration_x;
+      if(acceleration_y_changed)
+          character->acceleration_y = this->acceleration_y;
+    }
+
     frame++;
 }
 
