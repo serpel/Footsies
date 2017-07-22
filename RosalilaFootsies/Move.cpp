@@ -19,6 +19,21 @@ Move::Move(Character* character, Node* move_node)
       }
     }
 
+    if(move_node->getNodeByName("Inputs"))
+    {
+      vector<Node*> input_nodes = move_node->getNodeByName("Inputs")->getNodesByName("Input");
+      for(int i=0;i<(int)input_nodes.size();i++)
+      {
+        vector<Node*> button_nodes = input_nodes[0]->getNodesByName("Button");
+        vector<string> input;
+        for(int i=0;i<(int)button_nodes.size();i++)
+        {
+          input.push_back(button_nodes[i]->attributes["name"]);
+        }
+        inputs.push_back(input);
+      }
+    }
+
     this->restart();
 }
 
@@ -65,9 +80,40 @@ bool Move::isFinished()
 
 bool Move::canCancel(string move)
 {
-  for(int i=0; i<cancels.size();i++)
+  for(int i=0; i<(int)cancels.size();i++)
   {
     if(cancels[i]==move)
+      return true;
+  }
+  return false;
+}
+
+bool Move::inputIsInBuffer()
+{
+  for(int i=0;i<(int)inputs.size();i++)
+  {
+    list<string>::iterator current_move_button = character->input_buffer.begin();
+    bool input_found = true;
+    for(int j=0;j<(int)inputs[i].size();j++)
+    {
+      if(inputs[i][j].size()!=(*current_move_button).size())
+      {
+        input_found = false;
+        break;
+      }
+      for(int k=0;k<(int)inputs[i][j].size();k++)
+      {
+        if(inputs[i][j][k]=='*')
+          continue;
+        if(inputs[i][j][k]!=(*current_move_button)[k])
+        {
+          input_found = false;
+          break;
+        }
+      }
+      current_move_button++;
+    }
+    if(input_found)
       return true;
   }
   return false;

@@ -17,6 +17,7 @@ public:
     int current_frame;
     bool finished;
     vector<string> cancels;
+    vector< vector<string> >inputs;
 
     Move(Character* character,Node* move_node);
     void draw(int x, int y, bool fipped);
@@ -24,6 +25,7 @@ public:
     void restart();
     bool isFinished();
     bool canCancel(string move);
+    bool inputIsInBuffer();
     Frame* getCurrentFrame();
 };
 

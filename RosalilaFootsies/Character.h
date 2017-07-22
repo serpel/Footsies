@@ -25,11 +25,11 @@ public:
     Character* opponent;
     int player;
     bool game_started;
-    bool button_up;
     bool is_bot;
 
     Character(int player, int x, bool is_bot);
     void draw();
+    void updateBuffer();
     void logic();
     void cancel(string new_state);
     bool isFlipped();

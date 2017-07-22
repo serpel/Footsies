@@ -1,5 +1,10 @@
 <Moves>
   <Move name="idle">
+    <Inputs>
+      <Input>
+        <Button name="5"/>
+      </Input>
+    </Inputs>
     <Cancels>
       <Cancel move="walk_back"/>
       <Cancel move="walk_forward"/>
@@ -28,6 +33,11 @@
     </Frames>
   </Move>
   <Move name="walk_back">
+    <Inputs>
+      <Input>
+        <Button name="4"/>
+      </Input>
+    </Inputs>
     <Cancels>
       <Cancel move="idle"/>
       <Cancel move="walk_forward"/>
@@ -62,6 +72,11 @@
   </Move>
 
   <Move name="walk_forward">
+    <Inputs>
+      <Input>
+        <Button name="6"/>
+      </Input>
+    </Inputs>
     <Cancels>
       <Cancel move="idle"/>
       <Cancel move="walk_back"/>
@@ -96,6 +111,11 @@
   </Move>
 
   <Move name="jump_up">
+    <Inputs>
+      <Input>
+        <Button name="8"/>
+      </Input>
+    </Inputs>
     <Cancels>
       <Cancel move="idle"/>
       <Cancel move="walk_back"/>
@@ -136,6 +156,11 @@
   </Move>
 
   <Move name="jump_forward">
+    <Inputs>
+      <Input>
+        <Button name="9"/>
+      </Input>
+    </Inputs>
     <Cancels>
       <Cancel move="idle"/>
       <Cancel move="walk_back"/>

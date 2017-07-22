@@ -25,7 +25,6 @@ Character::Character(int player, int x, bool is_bot)
     this->acceleration_x = 0;
     this->acceleration_y = 0;
 
-    button_up = false;
     this->is_bot = is_bot;
 
     opponent = NULL;
@@ -42,6 +41,51 @@ void Character::draw()
     current_move->draw(this->x, this->y, this->isFlipped());
 }
 
+void Character::updateBuffer()
+{
+  bool left_pressed = rosalila()->receiver->isJoyDown(-4,player);
+  bool right_pressed = rosalila()->receiver->isJoyDown(-6,player);
+  bool up_pressed = rosalila()->receiver->isJoyDown(-8,player);
+  bool down_pressed = rosalila()->receiver->isJoyDown(-2,player);
+
+  if(this->isFlipped())
+  {
+      bool temp = left_pressed;
+      left_pressed = right_pressed;
+      right_pressed = temp;
+  }
+
+  string input_pressed = "5";
+
+  if(left_pressed && up_pressed)
+    input_pressed = "7";
+  else if(left_pressed && down_pressed)
+    input_pressed = "1";
+  else if(right_pressed && up_pressed)
+    input_pressed = "9";
+  else if(right_pressed && down_pressed)
+    input_pressed = "3";
+  else if(left_pressed)
+    input_pressed = "4";
+  else if(right_pressed)
+    input_pressed = "6";
+  else if(up_pressed)
+    input_pressed = "8";
+  else if(down_pressed)
+    input_pressed = "2";
+
+  if(rosalila()->receiver->isJoyPressed(1,player))
+    input_pressed += "a";
+  if(rosalila()->receiver->isJoyPressed(2,player))
+    input_pressed += "b";
+  if(rosalila()->receiver->isJoyPressed(3,player))
+    input_pressed += "c";
+
+  input_buffer.pop_back();
+  input_buffer.push_front(input_pressed);
+
+}
+
 void Character::logic()
 {
     if(game_started)
@@ -50,68 +94,14 @@ void Character::logic()
         if(previous_move->isFinished())
             cancel("idle");
 
-        bool left_pressed = rosalila()->receiver->isJoyDown(-4,player);
-        bool right_pressed = rosalila()->receiver->isJoyDown(-6,player);
-        bool up_pressed = rosalila()->receiver->isJoyDown(-8,player);
-        bool punch_pressed = rosalila()->receiver->isJoyDown(1,player);
+        updateBuffer();
 
-        string input_pressed = "5";
-
-        if(left_pressed)
-          input_pressed = "4";
-        if(right_pressed)
-          input_pressed = "6";
-        if(up_pressed)
-          input_pressed = "8";
-
-
-        if(is_bot)
+        for(map<string,Move*>::iterator move_iterator = moves.begin(); move_iterator != moves.end(); move_iterator++)
         {
-            int distance = abs(this->x-opponent->x);
-            left_pressed = true;
-            if(distance<231)
-                punch_pressed=true;
-        }else
-        {
-            left_pressed = rosalila()->receiver->isJoyDown(-4,player);
-            right_pressed = rosalila()->receiver->isJoyDown(-6,player);
-            punch_pressed = rosalila()->receiver->isJoyDown(1,player);
-        }
-
-        if(this->isFlipped())
-        {
-            bool temp = left_pressed;
-            left_pressed = right_pressed;
-            right_pressed = temp;
-        }
-
-        if(!punch_pressed)
-            button_up = true;
-
-        input_buffer.pop_back();
-        input_buffer.push_front(input_pressed);
-
-        bool none_pressed = !left_pressed && !right_pressed && !punch_pressed && !up_pressed;
-
-        if(none_pressed && this->moves["idle"]->canCancel(this->current_state))
-            cancel("idle");
-
-        if(left_pressed && this->moves["walk_back"]->canCancel(this->current_state))
-            cancel("walk_back");
-
-        if(right_pressed && this->moves["walk_forward"]->canCancel(this->current_state))
-            cancel("walk_forward");
-
-        if(button_up && punch_pressed && this->current_state != "punch" && this->moves["punch"]->canCancel(this->current_state))
-        {
-            button_up = false;
-            cancel("punch");
-        }
-
-        if(button_up && up_pressed && this->current_state != "punch" && this->moves["jump_forward"]->canCancel(this->current_state))
-        {
-            button_up = false;
-            cancel("jump_forward");
+          string move_name = (*move_iterator).first;
+          Move* move = (*move_iterator).second;
+          if(move->inputIsInBuffer() && move->canCancel(this->current_state))
+              cancel(move_name);
         }
 
         velocity_x += acceleration_x;

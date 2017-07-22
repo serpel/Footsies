@@ -1,5 +1,10 @@
 <Moves>
   <Move name="punch">
+    <Inputs>
+      <Input>
+        <Button name="*a"/>
+      </Input>
+    </Inputs>
     <Cancels>
       <Cancel move="idle"/>
       <Cancel move="walk_back"/>
