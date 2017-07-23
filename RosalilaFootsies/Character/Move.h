@@ -1,7 +1,7 @@
 #ifndef MOVE_H
 #define MOVE_H
 
-#include "../Rosalila/Rosalila.h"
+#include "../../Rosalila/Rosalila.h"
 #include "Frame.h"
 #include "Character.h"
 

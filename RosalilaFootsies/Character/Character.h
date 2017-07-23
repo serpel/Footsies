@@ -1,14 +1,17 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "../Rosalila/Rosalila.h"
+#include "../../Rosalila/Rosalila.h"
+#include "../Footsies.h"
 #include "Move.h"
 
+class Footsies;
 class Move;
 
 class Character
 {
 public:
+    Footsies* footsies;
     map< string, Move* > moves;
     string current_state;
     int frame;
@@ -27,12 +30,13 @@ public:
     bool game_started;
     string name;
 
-    Character(int player, int x, string name);
+    Character(Footsies* footsies, int player, int x, string name);
     void draw();
     void updateBuffer();
     void logic();
     void cancel(string new_state);
     bool isFlipped();
+    bool isInBounds();
     Move* getCurrentMove();
 };
 

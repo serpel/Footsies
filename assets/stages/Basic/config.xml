@@ -6,7 +6,7 @@
     <Layer x="800">
       <Image path="sun/1.png"/>
     </Layer>
-    <Layer x="500" y="50" velocity_x="-3" reset_at="100">
+    <Layer x="1500" y="50" velocity_x="-3" reset_at="700">
       <Image path="bird/1.png" duration="10"/>
       <Image path="bird/2.png" duration="10"/>
     </Layer>

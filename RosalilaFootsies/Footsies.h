@@ -1,10 +1,12 @@
 #ifndef FOOTSIES_H
 #define FOOTSIES_H
 
-#include "Character.h"
+#include "Character/Character.h"
+#include "Character/Move.h"
+#include "Character/Frame.h"
 #include "Stage/Stage.h"
-#include "Move.h"
-#include "Frame.h"
+
+class Character;
 
 class Footsies
 {
@@ -18,6 +20,8 @@ public:
     int frame;
     int player1_wins;
     int player2_wins;
+    bool game_over;
+    int game_over_frames;
 
     Footsies();
     void gameLoop();

@@ -1,7 +1,7 @@
 #ifndef FRAME_H
 #define FRAME_H
 
-#include "../Rosalila/Rosalila.h"
+#include "../../Rosalila/Rosalila.h"
 #include "Character.h"
 #include "Move.h"
 
@@ -20,6 +20,9 @@ public:
     bool finished;
     vector<Hitbox*> hitboxes;
     vector<Hitbox*> hurtboxes;
+
+    int x;
+    int y;
 
     double velocity_x;
     double velocity_y;

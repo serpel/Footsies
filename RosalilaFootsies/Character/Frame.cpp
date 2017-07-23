@@ -70,14 +70,23 @@ Frame::Frame(Character*character, Move* move, Node* frame_node)
       acceleration_y_changed = true;
       this->acceleration_y = atoi(frame_node->attributes["acceleration_y"].c_str());
    }
+
+   this->x = atoi(frame_node->attributes["x"].c_str());
+   this->y = atoi(frame_node->attributes["y"].c_str());
 }
 
 void Frame::draw(int x, int y, bool flipped)
 {
+
+    int frame_x_align = this->x;
+    if(flipped)
+    {
+      frame_x_align = -frame_x_align;
+    }
     rosalila()->graphics->draw2DImage
     (   image,
         image->getWidth(),image->getHeight(),
-        x-image->getWidth()/2,620-image->getHeight() - y,
+        frame_x_align + x-image->getWidth()/2, 620-image->getHeight() - y - this->y,
         1.0,
         0.0,
         flipped,
@@ -91,23 +100,23 @@ void Frame::draw(int x, int y, bool flipped)
     if(!flipped)
     {
         for(int i=0;i< (int)hitboxes.size();i++)
-            rosalila()->graphics->drawRectangle(hitboxes[i]->x + x,620-hitboxes[i]->y,
+            rosalila()->graphics->drawRectangle(this->x + hitboxes[i]->x + x,620-hitboxes[i]->y - this->y,
                                               hitboxes[i]->width,hitboxes[i]->height,0,
                                               255,0,0,128,true);
 
         for(int i=0;i< (int)hurtboxes.size();i++)
-          rosalila()->graphics->drawRectangle(hurtboxes[i]->x + x,620-hurtboxes[i]->y,
+          rosalila()->graphics->drawRectangle(this->x + hurtboxes[i]->x + x,620-hurtboxes[i]->y - this->y,
                                               hurtboxes[i]->width,hurtboxes[i]->height,0,
                                               0,0,255,128,true);
     }else
     {
         for(int i=0;i< (int)hitboxes.size();i++)
-            rosalila()->graphics->drawRectangle(-hitboxes[i]->x - hitboxes[i]->width + x,620-hitboxes[i]->y,
+            rosalila()->graphics->drawRectangle(-this->x - hitboxes[i]->x - hitboxes[i]->width + x,620-hitboxes[i]->y - this->y,
                                               hitboxes[i]->width,hitboxes[i]->height,0,
                                               255,0,0,128,true);
 
         for(int i=0;i< (int)hurtboxes.size();i++)
-          rosalila()->graphics->drawRectangle(-hurtboxes[i]->x - hurtboxes[i]->width + x,620-hurtboxes[i]->y,
+          rosalila()->graphics->drawRectangle(-this->x - hurtboxes[i]->x - hurtboxes[i]->width + x,620-hurtboxes[i]->y - this->y,
                                               hurtboxes[i]->width,hurtboxes[i]->height,0,
                                               0,0,255,128,true);
     }

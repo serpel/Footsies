@@ -1,7 +1,8 @@
 #include "Character.h"
 
-Character::Character(int player, int x, string name)
+Character::Character(Footsies* footsies, int player, int x, string name)
 {
+    this->footsies = footsies;
     this->name = name;
     this->current_state = "idle";
     this->frame = 0;
@@ -86,47 +87,45 @@ void Character::updateBuffer()
 
 void Character::logic()
 {
-    if(game_started)
-    {
-        Move* previous_move = moves[this->current_state];
-        if(previous_move->isFinished())
-            cancel("idle");
-
-        updateBuffer();
-
-        for(map<string,Move*>::iterator move_iterator = moves.begin(); move_iterator != moves.end(); move_iterator++)
-        {
-          string move_name = (*move_iterator).first;
-          Move* move = (*move_iterator).second;
-          if(move->inputIsInBuffer() && move->canCancel(this->current_state))
-              cancel(move_name);
-        }
-
-        velocity_x += acceleration_x;
-        velocity_y += acceleration_y;
-
-        int last_y = y;
-
-        if(this->isFlipped())
-            this->x -= velocity_x;
-        else
-            this->x += velocity_x;
-        this->y += velocity_y;
-
-        if(y<=0)
-        {
-          y = 0;
-          acceleration_y = 0;
-        }else
-        {
-          acceleration_y-=0.25;
-        }
-
-        if(last_y > 0 && y == 0)
-        {
+      Move* previous_move = moves[this->current_state];
+      if(previous_move->isFinished())
           cancel("idle");
-        }
-    }
+
+      updateBuffer();
+
+      for(map<string,Move*>::iterator move_iterator = moves.begin(); move_iterator != moves.end(); move_iterator++)
+      {
+        string move_name = (*move_iterator).first;
+        Move* move = (*move_iterator).second;
+        if(move->inputIsInBuffer() && move->canCancel(this->current_state))
+          if(game_started)
+            cancel(move_name);
+      }
+
+      velocity_x += acceleration_x;
+      velocity_y += acceleration_y;
+
+      int last_y = y;
+
+      if(this->isFlipped())
+          this->x -= velocity_x;
+      else
+          this->x += velocity_x;
+      this->y += velocity_y;
+
+      if(y<=0 && isInBounds())
+      {
+        y = 0;
+        acceleration_y = 0;
+      }else
+      {
+        acceleration_y-=0.25;
+      }
+
+      if(last_y > 0 && y == 0)
+      {
+        cancel("idle");
+      }
 
     Move* current_move = moves[this->current_state];
     current_move->logic();
@@ -149,4 +148,9 @@ bool Character::isFlipped()
 Move* Character::getCurrentMove()
 {
     return moves[this->current_state];
+}
+
+bool Character::isInBounds()
+{
+    return this->x > footsies->stage_boundaries && this->x < rosalila()->graphics->screen_width - footsies->stage_boundaries;
 }

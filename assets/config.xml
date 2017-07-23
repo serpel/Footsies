@@ -1,11 +1,11 @@
-<ConfigFile>
+<Config>
 	<User name=""/>
 	<Resolution x="1280" y="720"/>
 	<ScreenSize x="1280" y="720"/>
 	<Fullscreen enabled="no"/>
-	<Font red="0" green="0" blue="0" size="30"/>
-	<Chars>
-		<char name="Sho"/>
-		<char name="Footsies"/>
-	</Chars>
-</ConfigFile>
+	<Font red="255" green="255" blue="255" size="60"/>
+	<Characters>
+		<Character name="Sho"/>
+		<Character name="Footsies"/>
+	</Characters>
+</Config>
