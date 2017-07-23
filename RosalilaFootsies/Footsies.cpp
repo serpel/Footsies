@@ -4,11 +4,11 @@ Footsies::Footsies()
 {
     this->initial_separation = 200;
     this->stage_boundaries = 250;
-    this->character1 = new Character(0,rosalila()->graphics->screen_width/2-initial_separation,false);
-    this->character2 = new Character(1,rosalila()->graphics->screen_width/2+initial_separation,false);
+    this->character1 = new Character(0,rosalila()->graphics->screen_width/2-initial_separation,"Footsies");
+    this->character2 = new Character(1,rosalila()->graphics->screen_width/2+initial_separation,"Footsies");
     this->character1->opponent = character2;
     this->character2->opponent = character1;
-    this->stage = new Stage();
+    this->stage = new Stage("Basic");
     this->counter = 3;
     this->frame = 1;
     this->player1_wins = 0;
@@ -19,6 +19,7 @@ void Footsies::gameLoop()
 {
     while(true)
     {
+        stage->logic();
         character1->logic();
         character2->logic();
         stage->draw();

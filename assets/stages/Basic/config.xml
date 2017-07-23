@@ -1,0 +1,19 @@
+<Config>
+  <Layers>
+    <Layer>
+      <Image path="bg.png"/>
+    </Layer>
+    <Layer x="800">
+      <Image path="sun/1.png"/>
+    </Layer>
+    <Layer x="500" y="50" velocity_x="-3" reset_at="100">
+      <Image path="bird/1.png" duration="10"/>
+      <Image path="bird/2.png" duration="10"/>
+    </Layer>
+    <Layer x="100" y="100">
+      <Image path="tree/1.png" duration="15"/>
+      <Image path="tree/2.png" duration="15"/>
+      <Image path="tree/3.png" duration="15"/>
+    </Layer>
+  </Layers>
+</Config>

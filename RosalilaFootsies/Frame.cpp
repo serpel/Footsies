@@ -7,7 +7,7 @@ Frame::Frame(Character*character, Move* move, Node* frame_node)
 
     this->restart();
 
-    this->image = rosalila()->graphics->getTexture(assets_directory+frame_node->attributes["image"]);
+    this->image = rosalila()->graphics->getTexture(assets_directory+"character/" + this->character->name + "/" +frame_node->attributes["image"]);
 
     Node* hitboxes_node = frame_node->getNodeByName("Hitboxes");
     Node* hurtboxes_node = frame_node->getNodeByName("Hurtboxes");

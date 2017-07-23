@@ -25,9 +25,9 @@ public:
     Character* opponent;
     int player;
     bool game_started;
-    bool is_bot;
+    string name;
 
-    Character(int player, int x, bool is_bot);
+    Character(int player, int x, string name);
     void draw();
     void updateBuffer();
     void logic();

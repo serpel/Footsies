@@ -1,20 +1,8 @@
 #include "Character.h"
 
-Character::Character(int player, int x, bool is_bot)
+Character::Character(int player, int x, string name)
 {
-
-    Node* config_node = rosalila()->parser->getNodes(assets_directory+"character/config.xml");
-    vector<Node*> files_nodes = config_node->getNodeByName("MoveFiles")->getNodesByName("File");
-    for(int i=0; i< (int)files_nodes.size(); i++)
-    {
-        Node* moves_node = rosalila()->parser->getNodes(assets_directory+"character/" + files_nodes[i]->attributes["path"]);
-        vector<Node*> move_nodes = moves_node->getNodesByName("Move");
-        for(int i=0; i< (int)move_nodes.size(); i++)
-        {
-            moves[move_nodes[i]->attributes["name"]] = new Move(this,move_nodes[i]);
-        }
-    }
-
+    this->name = name;
     this->current_state = "idle";
     this->frame = 0;
     this->animation_frame = 0;
@@ -25,14 +13,24 @@ Character::Character(int player, int x, bool is_bot)
     this->acceleration_x = 0;
     this->acceleration_y = 0;
 
-    this->is_bot = is_bot;
-
     opponent = NULL;
     this->player = player;
     game_started = false;
 
     for(int i=0;i<20;i++)
       input_buffer.push_back("5");
+
+    Node* config_node = rosalila()->parser->getNodes(assets_directory+"character/" + this->name + "/config.xml");
+    vector<Node*> files_nodes = config_node->getNodeByName("MoveFiles")->getNodesByName("File");
+    for(int i=0; i< (int)files_nodes.size(); i++)
+    {
+        Node* moves_node = rosalila()->parser->getNodes(assets_directory+"character/" + this->name + "/" + files_nodes[i]->attributes["path"]);
+        vector<Node*> move_nodes = moves_node->getNodesByName("Move");
+        for(int i=0; i< (int)move_nodes.size(); i++)
+        {
+            moves[move_nodes[i]->attributes["name"]] = new Move(this,move_nodes[i]);
+        }
+    }
 }
 
 void Character::draw()
