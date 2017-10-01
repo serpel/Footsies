@@ -1,3 +1,7 @@
 Rosalila/
 log
 *.o
+*.dll
+include/
+lib/
+Footsies.exe
