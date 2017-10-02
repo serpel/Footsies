@@ -1,0 +1,12 @@
+<Config>
+  <Layers>
+    <Layer>
+      <Image path="aliens/1.png" duration="10"/>
+      <Image path="aliens/2.png" duration="10"/>
+      <Image path="aliens/3.png" duration="10"/>
+    </Layer>
+    <Layer x="250" y="603">
+      <Image path="platform.png"/>
+    </Layer>
+  </Layers>
+</Config>

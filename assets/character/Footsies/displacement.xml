@@ -10,39 +10,31 @@
       <Cancel move="walk_forward"/>
     </Cancels>
     <Frames>
-      <Frame duration="7" image="idle/1.png">
+      <Frame duration="7" image="idle/fighter_1.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
-      <Frame duration="7" image="idle/2.png">
+      <Frame duration="7" image="idle/fighter_2.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
-      <Frame duration="7" image="idle/3.png">
+      <Frame duration="7" image="idle/fighter_3.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
-      <Frame duration="7" image="idle/4.png">
+      <Frame duration="7" image="idle/fighter_4.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
     </Frames>
   </Move>
   <Move name="fall">
     <Frames>
-      <Frame duration="99999" image="fall/1.png" acceleration_y="-3"/>
+      <Frame duration="99999" image="fall/fighter_1.png" acceleration_y="-3"/>
     </Frames>
   </Move>
   <Move name="walk_back">
@@ -56,39 +48,24 @@
       <Cancel move="walk_forward"/>
     </Cancels>
     <Frames>
-      <Frame duration="7" image="walk_back/1.png" velocity_x="-6">
+      <Frame duration="7" image="walk_back/fighter_1.png" velocity_x="-6">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
-      <Frame duration="7" image="walk_back/2.png">
+      <Frame duration="7" image="walk_back/fighter_2.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
-      <Frame duration="7" image="walk_back/3.png">
+      <Frame duration="7" image="walk_back/fighter_3.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
-      <Frame duration="7" image="walk_back/4.png">
+      <Frame duration="7" image="walk_back/fighter_4.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
-        </Hurtboxes>
-      </Frame>
-      <Frame duration="7" image="walk_forward/4.png">
-        <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
     </Frames>
@@ -105,39 +82,24 @@
       <Cancel move="walk_back"/>
     </Cancels>
     <Frames>
-      <Frame duration="7" image="walk_forward/1.png" velocity_x="8">
+      <Frame duration="7" image="walk_forward/fighter_1.png" velocity_x="8">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
-      <Frame duration="7" image="walk_forward/2.png">
+      <Frame duration="7" image="walk_forward/fighter_2.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
-      <Frame duration="7" image="walk_forward/3.png">
+      <Frame duration="7" image="walk_forward/fighter_3.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
-      <Frame duration="7" image="walk_forward/4.png">
+      <Frame duration="7" image="walk_forward/fighter_4.png">
         <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
-        </Hurtboxes>
-      </Frame>
-      <Frame duration="7" image="walk_forward/5.png">
-        <Hurtboxes>
-          <Hurtbox x="2" y="401" width="78" height="98"/>
-          <Hurtbox x="-99" y="347" width="197" height="168"/>
-          <Hurtbox x="-78" y="184" width="150" height="181"/>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
         </Hurtboxes>
       </Frame>
     </Frames>

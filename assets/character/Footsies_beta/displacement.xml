@@ -1,0 +1,145 @@
+<Moves>
+  <Move name="idle">
+    <Inputs>
+      <Input>
+        <Button name="5"/>
+      </Input>
+    </Inputs>
+    <Cancels>
+      <Cancel move="walk_back"/>
+      <Cancel move="walk_forward"/>
+    </Cancels>
+    <Frames>
+      <Frame duration="7" image="idle/1.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="idle/2.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="idle/3.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="idle/4.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+    </Frames>
+  </Move>
+  <Move name="fall">
+    <Frames>
+      <Frame duration="99999" image="fall/1.png" acceleration_y="-3"/>
+    </Frames>
+  </Move>
+  <Move name="walk_back">
+    <Inputs>
+      <Input>
+        <Button name="4"/>
+      </Input>
+    </Inputs>
+    <Cancels>
+      <Cancel move="idle"/>
+      <Cancel move="walk_forward"/>
+    </Cancels>
+    <Frames>
+      <Frame duration="7" image="walk_back/1.png" velocity_x="-6">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="walk_back/2.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="walk_back/3.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="walk_back/4.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="walk_forward/4.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+    </Frames>
+  </Move>
+
+  <Move name="walk_forward">
+    <Inputs>
+      <Input>
+        <Button name="6"/>
+      </Input>
+    </Inputs>
+    <Cancels>
+      <Cancel move="idle"/>
+      <Cancel move="walk_back"/>
+    </Cancels>
+    <Frames>
+      <Frame duration="7" image="walk_forward/1.png" velocity_x="8">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="walk_forward/2.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="walk_forward/3.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="walk_forward/4.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame duration="7" image="walk_forward/5.png">
+        <Hurtboxes>
+          <Hurtbox x="2" y="401" width="78" height="98"/>
+          <Hurtbox x="-99" y="347" width="197" height="168"/>
+          <Hurtbox x="-78" y="184" width="150" height="181"/>
+        </Hurtboxes>
+      </Frame>
+    </Frames>
+  </Move>
+</Moves>
