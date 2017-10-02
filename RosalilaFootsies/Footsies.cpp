@@ -101,11 +101,16 @@ void Footsies::gameLoop()
         }
         for(int i=0;i< (int)character2_hurtboxes.size();i++)
         {
-            Hitbox character2_hurtbox = character2_hurtboxes[i]->getFlippedHitbox().getPlacedHitbox(character2->x - character2_current_frame->x,0);
+
+            Hitbox character2_hurtbox = character2_hurtboxes[i]->getPlacedHitbox(character2->x + character2_current_frame->x,0);
+            if(character2->isFlipped())
+                character2_hurtbox = character2_hurtboxes[i]->getFlippedHitbox().getPlacedHitbox(character2->x - character2_current_frame->x,0);
 
             for(int j=0;j< (int)character1_hurtboxes.size();j++)
             {
-                Hitbox character1_hurtbox = character1_hurtboxes[j]->getFlippedHitbox().getPlacedHitbox(character1->x - character1_current_frame->x,0);
+                Hitbox character1_hurtbox = character1_hurtboxes[j]->getPlacedHitbox(character1->x + character1_current_frame->x,0);
+                if(character1->isFlipped())
+                    character1_hurtbox = character1_hurtboxes[j]->getFlippedHitbox().getPlacedHitbox(character1->x - character1_current_frame->x,0);
 
                 if(character2_hurtbox.collides(character1_hurtbox))
                 {
