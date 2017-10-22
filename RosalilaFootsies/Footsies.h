@@ -23,7 +23,7 @@ public:
     bool game_over;
     int game_over_frames;
 
-    Footsies();
+    Footsies(string character1_name, string character2_name);
     void gameLoop();
 };
 

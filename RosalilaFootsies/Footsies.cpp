@@ -1,11 +1,11 @@
 #include "Footsies.h"
 
-Footsies::Footsies()
+Footsies::Footsies(string character1_name, string character2_name)
 {
     this->initial_separation = 200;
     this->stage_boundaries = 250;
-    this->character1 = new Character(this, 0,rosalila()->graphics->screen_width/2-initial_separation,"Footsies");
-    this->character2 = new Character(this, 1,rosalila()->graphics->screen_width/2+initial_separation,"Footsies");
+    this->character1 = new Character(this, 0,rosalila()->graphics->screen_width/2-initial_separation, character1_name);
+    this->character2 = new Character(this, 1,rosalila()->graphics->screen_width/2+initial_separation, character2_name);
     this->character1->opponent = character2;
     this->character2->opponent = character1;
     this->stage = new Stage("Aliens");

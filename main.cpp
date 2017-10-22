@@ -13,7 +13,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
   rosalila()->init();
-  Footsies *footsies = new Footsies();
+  Footsies *footsies = new Footsies("Footsies1", "Footsies2");
   footsies->gameLoop();
 
 /*

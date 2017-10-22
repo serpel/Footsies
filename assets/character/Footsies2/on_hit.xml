@@ -1,0 +1,14 @@
+<Moves>
+  <Move name="on_hit">
+    <Frames>
+      <Frame duration="5" image="on_hit/fighter_1.png" velocity_x="-5">
+      </Frame>
+      <Frame duration="5" image="on_hit/fighter_2.png">
+      </Frame>
+      <Frame duration="5" image="on_hit/fighter_3.png">
+      </Frame>
+      <Frame duration="5" image="on_hit/fighter_1.png">
+      </Frame>
+    </Frames>
+  </Move>
+</Moves>
