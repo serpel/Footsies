@@ -1,7 +1,7 @@
 One Punch Fighter
 =================
 
-TODO
+Easy to learn, hard to master adrenaline packed 2D pixel art fighting game. Focused on yomi by use of just one attack button game mechanic.
 
 ## Keywords
 
