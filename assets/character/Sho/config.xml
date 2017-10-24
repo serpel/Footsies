@@ -1,9 +1,0 @@
-<Config>
-  <MoveFiles>
-    <File path="displacement.xml"/>
-    <File path="attacks.xml"/>
-    <File path="on_hit.xml"/>
-  </MoveFiles>
-</Config>
-
-
