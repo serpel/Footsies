@@ -5,7 +5,7 @@
       <Image path="aliens/2.png" duration="10"/>
       <Image path="aliens/3.png" duration="10"/>
     </Layer>
-    <Layer x="250" y="603">
+    <Layer x="250" y="300">
       <Image path="platform.png"/>
     </Layer>
   </Layers>
