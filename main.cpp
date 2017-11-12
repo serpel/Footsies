@@ -62,7 +62,36 @@ int main(int argc, char *argv[])
           Color(255,255,255,255),
           0,0,
           false,
-          FlatShadow());
+          FlatShadow()
+      );
+
+      if(rosalila()->receiver->isKeyPressed('d') && player1_selection == -1)
+      {             
+        player1_cursor++;
+        if(player1_cursor >= (int)portraits.size())
+           player1_cursor = 0;
+      }
+
+      if(rosalila()->receiver->isKeyPressed('a') && player1_selection == -1)
+      {
+        player1_cursor--;
+        if(player1_cursor < 0)
+          player1_cursor = portraits.size()-1;
+      }
+
+      if(rosalila()->receiver->isKeyPressed('l') && player1_selection == -1)
+      {             
+        player2_cursor++;
+        if(player2_cursor >= (int)portraits.size())
+           player2_cursor = 0;
+      }
+
+      if(rosalila()->receiver->isKeyPressed('j') && player1_selection == -1)
+      {
+        player2_cursor--;
+        if(player2_cursor < 0)
+          player2_cursor = portraits.size()-1;
+      }
 
       if(rosalila()->receiver->isJoyPressed(-6,0) && player1_selection == -1)
       {
@@ -83,6 +112,17 @@ int main(int argc, char *argv[])
         player1_selection = player1_cursor;
       }
 
+     
+      //player selection
+      if(rosalila()->receiver->isKeyPressed('w'))
+      {
+        player1_selection = player1_cursor;
+      }
+
+      if(rosalila()->receiver->isKeyPressed('i'))
+      {
+        player2_selection = player2_cursor;
+      }
 
       if(rosalila()->receiver->isJoyPressed(-6,1) && player2_selection == -1)
       {
