@@ -1,11 +1,20 @@
 <Config>
   <Layers>
     <Layer>
-      <Image path="aliens/1.png" duration="10"/>
-      <Image path="aliens/2.png" duration="10"/>
-      <Image path="aliens/3.png" duration="10"/>
+      <Image path="sky.png"/>
     </Layer>
-    <Layer x="250" y="300">
+
+    <Layer  velocity_x="-1" reset_at="1280">
+      <Image path="clouds.png"/>
+    </Layer>
+    <Layer x="1280" velocity_x="-1" reset_at="1280">
+      <Image path="clouds.png"/>
+    </Layer>
+
+    <Layer>
+      <Image path="buildings.png"/>
+    </Layer>
+    <Layer x="250" y="586">
       <Image path="platform.png"/>
     </Layer>
   </Layers>
