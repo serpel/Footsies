@@ -4,16 +4,17 @@
       <Image path="sky.png"/>
     </Layer>
 
-    <Layer  velocity_x="-1" reset_at="1280">
+    <Layer  velocity_x="-0.5" reset_at="2560">
       <Image path="clouds.png"/>
     </Layer>
-    <Layer x="1280" velocity_x="-1" reset_at="1280">
+    <Layer x="1280" velocity_x="-0.5" reset_at="2560">
       <Image path="clouds.png"/>
     </Layer>
 
     <Layer>
       <Image path="buildings.png"/>
     </Layer>
+
     <Layer x="250" y="586">
       <Image path="platform.png"/>
     </Layer>

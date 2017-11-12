@@ -7,10 +7,10 @@ Layer::Layer(Stage* stage, Node* layer_node)
   this->current_image_frame = 0;
   this->frame = 0;
 
-  this->x = atoi(layer_node->attributes["x"].c_str());
-  this->y = atoi(layer_node->attributes["y"].c_str());
-  this->velocity_x = atoi(layer_node->attributes["velocity_x"].c_str());
-  this->velocity_y = atoi(layer_node->attributes["velocity_y"].c_str());
+  this->x = atof(layer_node->attributes["x"].c_str());
+  this->y = atof(layer_node->attributes["y"].c_str());
+  this->velocity_x = atof(layer_node->attributes["velocity_x"].c_str());
+  this->velocity_y = atof(layer_node->attributes["velocity_y"].c_str());
   this->reset_at = atoi(layer_node->attributes["reset_at"].c_str());
   this->original_x = x;
   this->original_y = y;

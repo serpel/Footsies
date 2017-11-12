@@ -12,12 +12,12 @@ public:
   vector<Image*> images;
   vector<int> image_durations;
   int frame;
-  int x;
-  int y;
-  int velocity_x;
-  int velocity_y;
-  int original_x;
-  int original_y;
+  double x;
+  double y;
+  double velocity_x;
+  double velocity_y;
+  double original_x;
+  double original_y;
   int reset_at;
   Stage* stage;
   int current_image;
