@@ -1,0 +1,58 @@
+<Moves>
+  <Move name="punch">
+    <Inputs>
+      <Input>
+        <Button name="*a"/>
+      </Input>
+    </Inputs>
+    <Cancels>
+      <Cancel move="idle"/>
+      <Cancel move="walk_back"/>
+      <Cancel move="walk_forward"/>
+    </Cancels>
+    <Frames>
+      <Frame x="0" duration="2" image="punch/fighter_1.png">
+        <Hurtboxes>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
+        </Hurtboxes>
+      </Frame>
+      <Frame x="0" duration="3" image="punch/fighter_2.png">
+        <Hurtboxes>
+          <Hurtbox x="-86" y="294" width="134" height="283"/>
+        </Hurtboxes>
+      </Frame>
+
+
+      <Frame x="0" duration="2" image="punch/fighter_3.png">
+        <Hurtboxes>
+          <Hurtbox x="230" y="146.8" width="-128" height="-85"/>
+          <Hurtbox x="121.2" y="222" width="-85" height="211"/>
+        </Hurtboxes>
+      </Frame>
+
+      <Frame x="0" y="1" duration="1" image="punch/fighter_4.png">
+        <Hurtboxes>
+          <Hurtbox x="230" y="231" width="-128" height="85"/>
+          <Hurtbox x="121.2" y="222" width="-85" height="211"/>
+        </Hurtboxes>
+        
+        <Hitboxes>
+          <Hitbox x="230" y="231" width="-128" height="85"/>
+        </Hitboxes>
+      </Frame>
+      
+      <Frame x="0" y="1" duration="15" image="punch/fighter_4.png">
+        <Hurtboxes>
+          <Hurtbox x="230" y="231" width="-128" height="85"/>
+          <Hurtbox x="121.2" y="222" width="-85" height="211"/>
+        </Hurtboxes>
+      </Frame>
+
+      <Frame x="0" duration="2" image="punch/fighter_5.png">
+        <Hurtboxes>
+          <Hurtbox x="121.2" y="222" width="-85" height="211"/>
+        </Hurtboxes>
+      </Frame>
+    </Frames>
+  </Move>
+</Moves>
