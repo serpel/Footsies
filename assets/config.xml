@@ -4,8 +4,4 @@
 	<ScreenSize x="1280" y="720"/>
 	<Fullscreen enabled="no"/>
 	<Font red="255" green="255" blue="255" size="60"/>
-	<Characters>
-		<Character name="Sho"/>
-		<Character name="Footsies"/>
-	</Characters>
 </Config>
