@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
       );
 
       if(rosalila()->receiver->isKeyPressed('d') && player1_selection == -1)
-      {             
+      {
         player1_cursor++;
         if(player1_cursor >= (int)portraits.size())
            player1_cursor = 0;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
       }
 
       if(rosalila()->receiver->isKeyPressed('l') && player1_selection == -1)
-      {             
+      {
         player2_cursor++;
         if(player2_cursor >= (int)portraits.size())
            player2_cursor = 0;
@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
         player1_selection = player1_cursor;
       }
 
-     
+
       //player selection
       if(rosalila()->receiver->isKeyPressed('w'))
       {
@@ -206,8 +206,10 @@ int main(int argc, char *argv[])
 
     if(player1_selection != -1 && player2_selection != -1)
     {
-      Footsies *footsies = new Footsies(character_directories[player1_selection], character_directories[player2_selection]);
+      Footsies *footsies = new Footsies(character_directories[player1_selection], character_directories[player2_selection],3);
       footsies->gameLoop();
+      player1_selection = -1;
+      player2_selection = -1;
     }
 
     rosalila()->update();
