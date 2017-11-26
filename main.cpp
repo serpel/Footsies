@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
 
     for(int i=0; i<(int)portraits.size(); i++)
     {
-      int x = i*500;
-      int y = 0;
+      int x = i*120 + 372;
+      int y = 90;
 
       rosalila()->graphics->draw2DImage
       (   portraits[i],

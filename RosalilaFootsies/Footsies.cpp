@@ -19,10 +19,18 @@ Footsies::Footsies(string character1_name, string character2_name, int total_rou
     player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/1.png"));
     player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/2.png"));
     player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/3.png"));
+    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/4.png"));
+    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/5.png"));
+    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/6.png"));
+    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/7.png"));
 
     player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/1.png"));
     player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/2.png"));
     player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/3.png"));
+    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/4.png"));
+    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/5.png"));
+    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/6.png"));
+    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/7.png"));
 
     wins_animation_velocity = 5;
     wins_animation_frame = 0;
@@ -32,8 +40,16 @@ Footsies::Footsies(string character1_name, string character2_name, int total_rou
     counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/2.png"));
     counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/3.png"));
     counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/4.png"));
+    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/5.png"));
+    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/6.png"));
+    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/7.png"));
+    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/8.png"));
+    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/9.png"));
+    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/10.png"));
+    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/11.png"));
+    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/12.png"));
 
-    counter_animation_velocity = 30;
+    counter_animation_velocity = 4;
     counter_animation_frame = 0;
     counter_animation_image = 0;
     game_started = false;
@@ -71,8 +87,8 @@ void Footsies::gameLoop()
         rosalila()->graphics->draw2DImage
         (   counter_images[counter_animation_image],
             counter_images[counter_animation_image]->getWidth(),counter_images[counter_animation_image]->getHeight(),
-            rosalila()->graphics->screen_width/2 - player1_wins_images[wins_animation_image]->getWidth()/2,
-            rosalila()->graphics->screen_height/2 - player1_wins_images[wins_animation_image]->getHeight()/2,
+            rosalila()->graphics->screen_width/2 - counter_images[counter_animation_image]->getWidth()/2,
+            rosalila()->graphics->screen_height/2 - counter_images[counter_animation_image]->getHeight()/2,
             1.0,
             0.0,
             false,
@@ -203,7 +219,6 @@ void Footsies::gameLoop()
         player2_wins++;
         game_over = true;
 
-        counter_animation_velocity = 30;
         counter_animation_frame = 0;
         counter_animation_image = 0;
         game_started = false;
@@ -214,7 +229,6 @@ void Footsies::gameLoop()
         player1_wins++;
         game_over = true;
 
-        counter_animation_velocity = 30;
         counter_animation_frame = 0;
         counter_animation_image = 0;
         game_started = false;
@@ -246,7 +260,7 @@ void Footsies::gameLoop()
           wins_animation_image++;
           if(wins_animation_image >= (int)player1_wins_images.size())
           {
-            wins_animation_image = 0;
+            wins_animation_image = 5;
           }
         }
 
@@ -272,7 +286,7 @@ void Footsies::gameLoop()
           wins_animation_image++;
           if(wins_animation_image >= (int)player2_wins_images.size())
           {
-            wins_animation_image = 0;
+            wins_animation_image = 5;
           }
         }
       }else if(game_over_frames == 50)
@@ -280,7 +294,6 @@ void Footsies::gameLoop()
         character1->x = rosalila()->graphics->screen_width/2-initial_separation;
         character2->x = rosalila()->graphics->screen_width/2+initial_separation;
 
-        counter_animation_velocity = 30;
         counter_animation_frame = 0;
         counter_animation_image = 0;
         game_started = false;
@@ -302,7 +315,6 @@ void Footsies::gameLoop()
         character2->cancel("idle");
         character2->x = rosalila()->graphics->screen_width/2+initial_separation;
 
-        counter_animation_velocity = 30;
         counter_animation_frame = 0;
         counter_animation_image = 0;
         game_started = false;
