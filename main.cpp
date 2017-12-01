@@ -59,6 +59,11 @@ int main(int argc, char *argv[])
   int player1_selection = -1;
   int player2_selection = -1;
 
+  TTF_Font* menu_font = NULL;
+
+  string font_path = assets_directory+"misc/font.ttf";
+  menu_font = TTF_OpenFont( font_path.c_str(), 28 );
+
   while(true)
   {
     rosalila()->graphics->draw2DImage
@@ -260,6 +265,9 @@ int main(int argc, char *argv[])
         false,
         FlatShadow()
     );
+
+    rosalila()->graphics->drawText(menu_font, character_directories[player1_cursor], 85, 375, false, false);
+    rosalila()->graphics->drawText(menu_font, character_directories[player2_cursor], 975, 627, false, false);
 
     rosalila()->update();
   }
