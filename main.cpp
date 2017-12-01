@@ -23,6 +23,11 @@ int main(int argc, char *argv[])
   vector<string> character_directories = rosalila()->utility->getDirectoryNames(assets_directory + "character/");
   vector<Image*> portraits;
   vector< vector<Image*> > idle_animations;
+  vector< vector<int> > idle_animation_durations;
+  int player1_idle_animation_frame = 0;
+  int player2_idle_animation_frame = 0;
+  int player1_idle_animation_image = 0;
+  int player2_idle_animation_image = 0;
 
   for(int i=0; i<(int)character_directories.size(); i++)
   {
@@ -37,11 +42,14 @@ int main(int argc, char *argv[])
       {
         vector<Node*> frames = move_nodes[i]->getNodeByName("Frames")->getNodesByName("Frame");
         vector<Image*> idle_animation;
+        vector<int> durations;
         for(int i=0; i<(int)frames.size(); i++)
         {
           idle_animation.push_back(rosalila()->graphics->getTexture(assets_directory + "character/" + directory_name + "/" + frames[i]->attributes["image"]));
+          durations.push_back(atoi(frames[i]->attributes["duration"].c_str()));
         }
         idle_animations.push_back(idle_animation);
+        idle_animation_durations.push_back(durations);
       }
     }
   }
@@ -85,80 +93,53 @@ int main(int argc, char *argv[])
           FlatShadow()
       );
 
-      if(rosalila()->receiver->isKeyPressed('d') && player1_selection == -1)
+      if((rosalila()->receiver->isKeyPressed('d') && player1_selection == -1)
+          || (rosalila()->receiver->isJoyPressed(-6,0) && player1_selection == -1))
       {
         player1_cursor++;
         if(player1_cursor >= (int)portraits.size())
            player1_cursor = 0;
+        player1_idle_animation_frame = 0;
+        player1_idle_animation_image = 0;
       }
 
-      if(rosalila()->receiver->isKeyPressed('a') && player1_selection == -1)
+      if((rosalila()->receiver->isKeyPressed('a') && player1_selection == -1)
+        || (rosalila()->receiver->isJoyPressed(-4,0) && player1_selection == -1))
       {
         player1_cursor--;
         if(player1_cursor < 0)
           player1_cursor = portraits.size()-1;
+        player1_idle_animation_frame = 0;
+        player1_idle_animation_image = 0;
       }
 
-      if(rosalila()->receiver->isKeyPressed('l') && player1_selection == -1)
+      if((rosalila()->receiver->isKeyPressed('l') && player1_selection == -1)
+        || (rosalila()->receiver->isJoyPressed(-6,1) && player2_selection == -1))
       {
         player2_cursor++;
         if(player2_cursor >= (int)portraits.size())
            player2_cursor = 0;
+        player2_idle_animation_frame = 0;
+        player2_idle_animation_image = 0;
       }
 
-      if(rosalila()->receiver->isKeyPressed('j') && player1_selection == -1)
+      if((rosalila()->receiver->isKeyPressed('j') && player1_selection == -1)
+        || (rosalila()->receiver->isJoyPressed(-4,1) && player2_selection == -1))
       {
         player2_cursor--;
         if(player2_cursor < 0)
           player2_cursor = portraits.size()-1;
+        player2_idle_animation_frame = 0;
+        player2_idle_animation_image = 0;
       }
 
-      if(rosalila()->receiver->isJoyPressed(-6,0) && player1_selection == -1)
-      {
-        player1_cursor++;
-        if(player1_cursor >= (int)portraits.size())
-          player1_cursor = 0;
-      }
 
-      if(rosalila()->receiver->isJoyPressed(-4,0) && player1_selection == -1)
-      {
-        player1_cursor--;
-        if(player1_cursor < 0)
-          player1_cursor = portraits.size()-1;
-      }
-
-      if(rosalila()->receiver->isJoyPressed(1,0))
+      if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w'))
       {
         player1_selection = player1_cursor;
       }
 
-
-      //player selection
-      if(rosalila()->receiver->isKeyPressed('w'))
-      {
-        player1_selection = player1_cursor;
-      }
-
-      if(rosalila()->receiver->isKeyPressed('i'))
-      {
-        player2_selection = player2_cursor;
-      }
-
-      if(rosalila()->receiver->isJoyPressed(-6,1) && player2_selection == -1)
-      {
-        player2_cursor++;
-        if(player2_cursor >= (int)portraits.size())
-          player2_cursor = 0;
-      }
-
-      if(rosalila()->receiver->isJoyPressed(-4,1) && player2_selection == -1)
-      {
-        player2_cursor--;
-        if(player2_cursor < 0)
-          player2_cursor = portraits.size()-1;
-      }
-
-      if(rosalila()->receiver->isJoyPressed(1,1))
+      if(rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
       {
         player2_selection = player2_cursor;
       }
@@ -221,20 +202,6 @@ int main(int argc, char *argv[])
               0,0,
               false,
               FlatShadow());
-
-        rosalila()->graphics->draw2DImage
-        (   idle_animations[i][0],
-            idle_animations[i][0]->getWidth(),idle_animations[i][0]->getHeight(),
-            0,0,
-            1.0,
-            0.0,
-            false,
-            0,0,
-            Color(255,255,255,255),
-            0,0,
-            false,
-            FlatShadow()
-        );
       }
     }
 
@@ -245,6 +212,54 @@ int main(int argc, char *argv[])
       player1_selection = -1;
       player2_selection = -1;
     }
+
+    player1_idle_animation_frame++;
+    if(player1_idle_animation_frame >= idle_animation_durations[player1_cursor][player1_idle_animation_image])
+    {
+      player1_idle_animation_frame = 0;
+      player1_idle_animation_image++;
+      if(player1_idle_animation_image >= (int)idle_animations[player1_cursor].size())
+      player1_idle_animation_image = 0;
+    }
+
+    player2_idle_animation_frame++;
+    if(player2_idle_animation_frame >= idle_animation_durations[player2_cursor][player2_idle_animation_image])
+    {
+      player2_idle_animation_frame = 0;
+      player2_idle_animation_image++;
+      if(player2_idle_animation_image >= (int)idle_animations[player2_cursor].size())
+        player2_idle_animation_image = 0;
+    }
+
+    Image* player1_idle_image = idle_animations[player1_cursor][player1_idle_animation_image];
+    rosalila()->graphics->draw2DImage
+    (   player1_idle_image,
+        player1_idle_image->getWidth(),player1_idle_image->getHeight(),
+        -100,-170,
+        1.0,
+        0.0,
+        false,
+        0,0,
+        Color(255,255,255,255),
+        0,0,
+        false,
+        FlatShadow()
+    );
+
+    Image* player2_idle_image = idle_animations[player2_cursor][player2_idle_animation_image];
+    rosalila()->graphics->draw2DImage
+    (   player2_idle_image,
+        player2_idle_image->getWidth(),player2_idle_image->getHeight(),
+        780,80,
+        1.0,
+        0.0,
+        true,
+        0,0,
+        Color(255,255,255,255),
+        0,0,
+        false,
+        FlatShadow()
+    );
 
     rosalila()->update();
   }
