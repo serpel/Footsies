@@ -22,9 +22,29 @@ int main(int argc, char *argv[])
 
   vector<string> character_directories = rosalila()->utility->getDirectoryNames(assets_directory + "character/");
   vector<Image*> portraits;
+  vector< vector<Image*> > idle_animations;
 
   for(int i=0; i<(int)character_directories.size(); i++)
-    portraits.push_back(rosalila()->graphics->getTexture(assets_directory + "character/" + character_directories[i] + "/portrait.png"));
+  {
+    string directory_name = character_directories[i];
+    portraits.push_back(rosalila()->graphics->getTexture(assets_directory + "character/" + directory_name + "/portrait.png"));
+
+    Node* moves_node = rosalila()->parser->getNodes(assets_directory+"character/" + directory_name + "/displacement.xml");
+    vector<Node*> move_nodes = moves_node->getNodesByName("Move");
+    for(int i=0; i<(int)move_nodes.size(); i++)
+    {
+      if(move_nodes[i]->attributes["name"]=="idle")
+      {
+        vector<Node*> frames = move_nodes[i]->getNodeByName("Frames")->getNodesByName("Frame");
+        vector<Image*> idle_animation;
+        for(int i=0; i<(int)frames.size(); i++)
+        {
+          idle_animation.push_back(rosalila()->graphics->getTexture(assets_directory + "character/" + directory_name + "/" + frames[i]->attributes["image"]));
+        }
+        idle_animations.push_back(idle_animation);
+      }
+    }
+  }
 
   int player1_cursor = 0;
   int player2_cursor = portraits.size()-1;
@@ -201,6 +221,20 @@ int main(int argc, char *argv[])
               0,0,
               false,
               FlatShadow());
+
+        rosalila()->graphics->draw2DImage
+        (   idle_animations[i][0],
+            idle_animations[i][0]->getWidth(),idle_animations[i][0]->getHeight(),
+            0,0,
+            1.0,
+            0.0,
+            false,
+            0,0,
+            Color(255,255,255,255),
+            0,0,
+            false,
+            FlatShadow()
+        );
       }
     }
 
