@@ -32,6 +32,14 @@ Footsies::Footsies(string character1_name, string character2_name, int total_rou
     player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/6.png"));
     player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/7.png"));
 
+    win_anim_velocities.push_back(6);
+    win_anim_velocities.push_back(6);
+    win_anim_velocities.push_back(6);
+    win_anim_velocities.push_back(6);
+    win_anim_velocities.push_back(32);
+    win_anim_velocities.push_back(10);
+    win_anim_velocities.push_back(10);
+
     wins_animation_velocity = 5;
     wins_animation_frame = 0;
     wins_animation_image = 0;
@@ -48,6 +56,19 @@ Footsies::Footsies(string character1_name, string character2_name, int total_rou
     counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/10.png"));
     counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/11.png"));
     counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/12.png"));
+
+    counter_anim_velocities.push_back(4);
+    counter_anim_velocities.push_back(4);
+    counter_anim_velocities.push_back(18);
+    counter_anim_velocities.push_back(4);
+    counter_anim_velocities.push_back(4);
+    counter_anim_velocities.push_back(18);
+    counter_anim_velocities.push_back(4);
+    counter_anim_velocities.push_back(4);
+    counter_anim_velocities.push_back(18);
+    counter_anim_velocities.push_back(4);
+    counter_anim_velocities.push_back(4);
+    counter_anim_velocities.push_back(18);
 
     counter_animation_velocity = 4;
     counter_animation_frame = 0;
@@ -108,7 +129,7 @@ void Footsies::gameLoop()
     rosalila()->graphics->drawText(rosalila()->utility->toString(player2_wins), 300, 0, true, false);
 
     counter_animation_frame++;
-    if(counter_animation_frame > counter_animation_velocity)
+        if(counter_animation_frame > counter_anim_velocities[counter_animation_image])
     {
       counter_animation_frame = 0;
       counter_animation_image++;
@@ -254,7 +275,7 @@ void Footsies::gameLoop()
             FlatShadow());
 
         wins_animation_frame++;
-        if(wins_animation_frame > wins_animation_velocity)
+        if(wins_animation_frame > win_anim_velocities[wins_animation_image])
         {
           wins_animation_frame = 0;
           wins_animation_image++;
@@ -280,7 +301,7 @@ void Footsies::gameLoop()
             false,
             FlatShadow());
         wins_animation_frame++;
-        if(wins_animation_frame > wins_animation_velocity)
+        if(wins_animation_frame > win_anim_velocities[wins_animation_image])
         {
           wins_animation_frame = 0;
           wins_animation_image++;

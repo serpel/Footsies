@@ -20,6 +20,7 @@ public:
 
     //counter
     vector<Image*> counter_images;
+    vector<int> counter_anim_velocities;
     int counter_animation_velocity;
     int counter_animation_frame;
     int counter_animation_image;
@@ -33,6 +34,7 @@ public:
     
     vector<Image*> player1_wins_images;
     vector<Image*> player2_wins_images;
+    vector<int> win_anim_velocities;
     int wins_animation_velocity;
     int wins_animation_frame;
     int wins_animation_image;
