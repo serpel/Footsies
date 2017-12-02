@@ -77,6 +77,59 @@ int main(int argc, char *argv[])
 
   rosalila()->sound->playSound("character_select_screen", -1, 0, 0, false);
 
+  vector<Image*> intro_images;
+  vector<int> intro_anim_velocities;
+  int intro_animation_velocity;
+  int intro_animation_frame;
+  int intro_animation_image;
+
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/iddle.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/1.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/2.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/3.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/4.png"));
+
+  intro_anim_velocities.push_back(8);
+  intro_anim_velocities.push_back(8);
+  intro_anim_velocities.push_back(8);
+  intro_anim_velocities.push_back(8);
+  intro_anim_velocities.push_back(8);
+
+  intro_animation_velocity = 4;
+  intro_animation_frame = 0;
+  intro_animation_image = 0;
+
+  while(true){
+
+    rosalila()->graphics->draw2DImage
+    (   intro_images[intro_animation_image],
+        intro_images[intro_animation_image]->getWidth(),intro_images[intro_animation_image]->getHeight(),
+        rosalila()->graphics->screen_width/2 - intro_images[intro_animation_image]->getWidth()/2,
+        rosalila()->graphics->screen_height/2 - intro_images[intro_animation_image]->getHeight()/2,
+        1.0,
+        0.0,
+        false,
+        0,0,
+        Color(255,255,255,255),
+        0,0,
+        false,
+        FlatShadow()
+    );
+
+    rosalila()->update();
+
+  intro_animation_frame++;
+  if(intro_animation_frame > intro_anim_velocities[intro_animation_image])
+  {
+    intro_animation_frame = 0;
+    intro_animation_image++;
+    if(intro_animation_image >= (int)intro_images.size())
+    {
+        intro_animation_image = 0;
+    }
+  }
+}
+
   while(true)
   {
     rosalila()->graphics->draw2DImage

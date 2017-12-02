@@ -89,6 +89,7 @@ void Footsies::gameLoop()
 {
   while(true)
   {
+
     if(player1_wins == total_rounds || player2_wins == total_rounds)
     {
       if(game_over_frames > 100)
