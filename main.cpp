@@ -88,7 +88,9 @@ int main(int argc, char *argv[])
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/2.png"));
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/3.png"));
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/4.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/blink.png"));
 
+  intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
@@ -117,7 +119,7 @@ int main(int argc, char *argv[])
   {
     intro_animation_frame = 0;
     intro_animation_image++;
-    if(intro_animation_image >= (int)intro_images.size())
+    if(intro_animation_image >= (int)intro_images.size()-1)
     {
         intro_animation_image = 0;
     }
@@ -126,6 +128,24 @@ int main(int argc, char *argv[])
   if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w') ||
      rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
   {
+
+    //blink animation
+    rosalila()->graphics->draw2DImage
+    (   intro_images[(int)intro_images.size()-1],
+        intro_images[(int)intro_images.size()-1]->getWidth(),intro_images[(int)intro_images.size()-1]->getHeight(),
+        rosalila()->graphics->screen_width/2 - intro_images[(int)intro_images.size()-1]->getWidth()/2,
+        rosalila()->graphics->screen_height/2 - intro_images[(int)intro_images.size()-1]->getHeight()/2,
+        1.0,
+        0.0,
+        false,
+        0,0,
+        Color(255,255,255,255),
+        0,0,
+        false,
+        FlatShadow()
+    );
+
+    rosalila()->update();
     break;
   }
 
