@@ -30,6 +30,8 @@ public:
     bool game_started;
     string name;
 
+    Image* portrait;
+
     Character(Footsies* footsies, int player, int x, string name);
     void draw();
     void updateBuffer();

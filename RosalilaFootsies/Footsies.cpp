@@ -2,78 +2,87 @@
 
 Footsies::Footsies(string character1_name, string character2_name, int total_rounds)
 {
-    this->initial_separation = 200;
-    this->stage_boundaries = 250;
-    this->character1 = new Character(this, 0,rosalila()->graphics->screen_width/2-initial_separation, character1_name);
-    this->character2 = new Character(this, 1,rosalila()->graphics->screen_width/2+initial_separation, character2_name);
-    this->character1->opponent = character2;
-    this->character2->opponent = character1;
-    this->stage = new Stage("Aliens");
-    this->frame = 1;
-    this->player1_wins = 0;
-    this->player2_wins = 0;
-    this->game_over = false;
-    this->game_over_frames = 0;
-    this->total_rounds = total_rounds;
+  this->initial_separation = 200;
+  this->stage_boundaries = 250;
+  this->character1 = new Character(this, 0,rosalila()->graphics->screen_width/2-initial_separation, character1_name);
+  this->character2 = new Character(this, 1,rosalila()->graphics->screen_width/2+initial_separation, character2_name);
+  this->character1->opponent = character2;
+  this->character2->opponent = character1;
+  this->stage = new Stage("Aliens");
+  this->frame = 1;
+  this->player1_wins = 0;
+  this->player2_wins = 0;
+  this->game_over = false;
+  this->game_over_frames = 0;
+  this->total_rounds = total_rounds;
 
-    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/1.png"));
-    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/2.png"));
-    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/3.png"));
-    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/4.png"));
-    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/5.png"));
-    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/6.png"));
-    player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/7.png"));
+  player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/1.png"));
+  player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/2.png"));
+  player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/3.png"));
+  player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/4.png"));
+  player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/5.png"));
+  player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/6.png"));
+  player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/7.png"));
 
-    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/1.png"));
-    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/2.png"));
-    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/3.png"));
-    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/4.png"));
-    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/5.png"));
-    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/6.png"));
-    player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/7.png"));
+  player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/1.png"));
+  player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/2.png"));
+  player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/3.png"));
+  player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/4.png"));
+  player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/5.png"));
+  player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/6.png"));
+  player2_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player2_wins/7.png"));
 
-    win_anim_velocities.push_back(6);
-    win_anim_velocities.push_back(6);
-    win_anim_velocities.push_back(6);
-    win_anim_velocities.push_back(6);
-    win_anim_velocities.push_back(32);
-    win_anim_velocities.push_back(10);
-    win_anim_velocities.push_back(10);
+  win_anim_velocities.push_back(6);
+  win_anim_velocities.push_back(6);
+  win_anim_velocities.push_back(6);
+  win_anim_velocities.push_back(6);
+  win_anim_velocities.push_back(32);
+  win_anim_velocities.push_back(10);
+  win_anim_velocities.push_back(10);
 
-    wins_animation_velocity = 5;
-    wins_animation_frame = 0;
-    wins_animation_image = 0;
+  wins_animation_velocity = 5;
+  wins_animation_frame = 0;
+  wins_animation_image = 0;
 
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/1.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/2.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/3.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/4.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/5.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/6.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/7.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/8.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/9.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/10.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/11.png"));
-    counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/12.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/1.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/2.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/3.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/4.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/5.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/6.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/7.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/8.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/9.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/10.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/11.png"));
+  counter_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/counter/12.png"));
 
-    counter_anim_velocities.push_back(4);
-    counter_anim_velocities.push_back(4);
-    counter_anim_velocities.push_back(18);
-    counter_anim_velocities.push_back(4);
-    counter_anim_velocities.push_back(4);
-    counter_anim_velocities.push_back(18);
-    counter_anim_velocities.push_back(4);
-    counter_anim_velocities.push_back(4);
-    counter_anim_velocities.push_back(18);
-    counter_anim_velocities.push_back(4);
-    counter_anim_velocities.push_back(4);
-    counter_anim_velocities.push_back(18);
+  counter_anim_velocities.push_back(4);
+  counter_anim_velocities.push_back(4);
+  counter_anim_velocities.push_back(18);
+  counter_anim_velocities.push_back(4);
+  counter_anim_velocities.push_back(4);
+  counter_anim_velocities.push_back(18);
+  counter_anim_velocities.push_back(4);
+  counter_anim_velocities.push_back(4);
+  counter_anim_velocities.push_back(18);
+  counter_anim_velocities.push_back(4);
+  counter_anim_velocities.push_back(4);
+  counter_anim_velocities.push_back(18);
 
-    counter_animation_velocity = 4;
-    counter_animation_frame = 0;
-    counter_animation_image = 0;
-    game_started = false;
+  counter_animation_velocity = 4;
+  counter_animation_frame = 0;
+  counter_animation_image = 0;
+  game_started = false;
+
+  scoreboard_player1 = rosalila()->graphics->getTexture(assets_directory + "misc/scoreboards/player1.png");
+  scoreboard_player2 = rosalila()->graphics->getTexture(assets_directory + "misc/scoreboards/player2.png");
+
+  this->character_name_font = NULL;
+  string font_path = assets_directory+"misc/font.ttf";
+  character_name_font = TTF_OpenFont( font_path.c_str(), 15 );
+
+  rosalila()->sound->playSound("countdown", -1, 0, 0, false);
 }
 
 void Footsies::gameLoop()
@@ -101,6 +110,9 @@ void Footsies::gameLoop()
     stage->draw();
     character1->draw();
     character2->draw();
+
+    this->drawScoreboards();
+
     if(!game_started)
     {
       if(!game_over)
@@ -125,8 +137,6 @@ void Footsies::gameLoop()
         character1->game_started = true;
         character2->game_started = true;
     }
-    rosalila()->graphics->drawText(rosalila()->utility->toString(player1_wins), -300, 0, true, false);
-    rosalila()->graphics->drawText(rosalila()->utility->toString(player2_wins), 300, 0, true, false);
 
     counter_animation_frame++;
         if(counter_animation_frame > counter_anim_velocities[counter_animation_image])
@@ -257,9 +267,10 @@ void Footsies::gameLoop()
 
     if(game_over)
     {
-      game_over_frames++;
       if(player1_wins == total_rounds)
       {
+        if(game_over_frames==1)
+          rosalila()->sound->playSound("player1_wins", -1, 0, 0, false);
         rosalila()->graphics->draw2DImage
         (   player1_wins_images[wins_animation_image],
             player1_wins_images[wins_animation_image]->getWidth(),player1_wins_images[wins_animation_image]->getHeight(),
@@ -287,6 +298,8 @@ void Footsies::gameLoop()
 
       }else if(player2_wins == total_rounds)
       {
+        if(game_over_frames==1)
+          rosalila()->sound->playSound("player2_wins", -1, 0, 0, false);
         rosalila()->graphics->draw2DImage
         (   player2_wins_images[wins_animation_image],
             player2_wins_images[wins_animation_image]->getWidth(),player2_wins_images[wins_animation_image]->getHeight(),
@@ -326,28 +339,97 @@ void Footsies::gameLoop()
         character2->cancel("idle");
         character1->game_started = false;
         character2->game_started = false;
+
+        rosalila()->sound->playSound("countdown", -1, 0, 0, false);
       }
+      game_over_frames++;
     }
 
     if(rosalila()->receiver->isKeyPressed('r'))
     {
-        character1->cancel("idle");
-        character1->x = rosalila()->graphics->screen_width/2-initial_separation;
-        character2->cancel("idle");
-        character2->x = rosalila()->graphics->screen_width/2+initial_separation;
+      character1->cancel("idle");
+      character1->x = rosalila()->graphics->screen_width/2-initial_separation;
+      character2->cancel("idle");
+      character2->x = rosalila()->graphics->screen_width/2+initial_separation;
 
-        counter_animation_frame = 0;
-        counter_animation_image = 0;
-        game_started = false;
+      counter_animation_frame = 0;
+      counter_animation_image = 0;
+      game_started = false;
 
-        frame = 1;
-        character1->game_started = false;
-        character2->game_started = false;
-        player1_wins = 0;
-        player2_wins = 0;
+      frame = 1;
+      character1->game_started = false;
+      character2->game_started = false;
+      player1_wins = 0;
+      player2_wins = 0;
     }
 
     frame++;
     rosalila()->update();
   }
+}
+
+void Footsies::drawScoreboards()
+{
+  int player1_scoreboard_x = 200;
+  int player1_scoreboard_y = 50;
+  int player2_scoreboard_x = 800;
+  int player2_scoreboard_y = 50;
+
+  rosalila()->graphics->draw2DImage
+  (   scoreboard_player1,
+      scoreboard_player1->getWidth(),scoreboard_player1->getHeight(),
+      player1_scoreboard_x, player1_scoreboard_y,
+      1.0,
+      0.0,
+      false,
+      0,0,
+      Color(255,255,255,255),
+      0,0,
+      false,
+      FlatShadow());
+
+  rosalila()->graphics->draw2DImage
+  (   scoreboard_player2,
+      scoreboard_player2->getWidth(),scoreboard_player2->getHeight(),
+      player2_scoreboard_x, player2_scoreboard_y,
+      1.0,
+      0.0,
+      false,
+      0,0,
+      Color(255,255,255,255),
+      0,0,
+      false,
+      FlatShadow());
+
+    rosalila()->graphics->draw2DImage
+    (   character1->portrait,
+        character1->portrait->getWidth(),character1->portrait->getHeight(),
+        player1_scoreboard_x + 24 - 6, player1_scoreboard_y + 18 - 6,
+        1.0,
+        0.0,
+        false,
+        0,0,
+        Color(255,255,255,255),
+        0,0,
+        false,
+        FlatShadow());
+
+    rosalila()->graphics->draw2DImage
+    (   character2->portrait,
+        character2->portrait->getWidth(),character2->portrait->getHeight(),
+        player2_scoreboard_x + 192 - 6, player2_scoreboard_y + 18 - 6,
+        1.0,
+        0.0,
+        false,
+        0,0,
+        Color(255,255,255,255),
+        0,0,
+        false,
+        FlatShadow());
+
+  rosalila()->graphics->drawText(rosalila()->utility->toString(player1_wins), player1_scoreboard_x + 183, player1_scoreboard_y + 27, false, false);
+  rosalila()->graphics->drawText(this->character_name_font, character1->name, player1_scoreboard_x + 140, player1_scoreboard_y + 97, false, false);
+
+  rosalila()->graphics->drawText(rosalila()->utility->toString(player2_wins), player2_scoreboard_x + 75, player2_scoreboard_y + 27, false, false);
+  rosalila()->graphics->drawText(this->character_name_font, character2->name, player2_scoreboard_x + 35, player2_scoreboard_y + 97, false, false);
 }

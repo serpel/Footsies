@@ -2,80 +2,87 @@
 
 Move::Move(Character* character, Node* move_node)
 {
-    this->character = character;
-    vector<Node*> frame_nodes = move_node->getNodeByName("Frames")->getNodesByName("Frame");
-    for(int i=0;i<(int)frame_nodes.size();i++)
-    {
-        Frame* frame = new Frame(character, this, frame_nodes[i]);
-        this->frames.push_back(frame);
-    }
+  this->character = character;
 
-    if(move_node->getNodeByName("Cancels"))
+  if(move_node->hasAttribute("sound"))
+  {
+    string sound_name = character->name + "#" + move_node->attributes["name"];
+    string sound_path = assets_directory + "character/" + character->name + "/" + move_node->attributes["sound"];
+    rosalila()->sound->addSound(sound_name, sound_path);
+  }
+  vector<Node*> frame_nodes = move_node->getNodeByName("Frames")->getNodesByName("Frame");
+  for(int i=0;i<(int)frame_nodes.size();i++)
+  {
+      Frame* frame = new Frame(character, this, frame_nodes[i]);
+      this->frames.push_back(frame);
+  }
+
+  if(move_node->getNodeByName("Cancels"))
+  {
+    vector<Node*> cancel_nodes = move_node->getNodeByName("Cancels")->getNodesByName("Cancel");
+    for(int i=0;i<(int)cancel_nodes.size();i++)
     {
-      vector<Node*> cancel_nodes = move_node->getNodeByName("Cancels")->getNodesByName("Cancel");
-      for(int i=0;i<(int)cancel_nodes.size();i++)
+        this->cancels.push_back(cancel_nodes[i]->attributes["move"]);
+    }
+  }
+
+  if(move_node->getNodeByName("Inputs"))
+  {
+    vector<Node*> input_nodes = move_node->getNodeByName("Inputs")->getNodesByName("Input");
+    for(int i=0;i<(int)input_nodes.size();i++)
+    {
+      vector<Node*> button_nodes = input_nodes[0]->getNodesByName("Button");
+      vector<string> input;
+      for(int i=0;i<(int)button_nodes.size();i++)
       {
-          this->cancels.push_back(cancel_nodes[i]->attributes["move"]);
+        input.push_back(button_nodes[i]->attributes["name"]);
       }
+      inputs.push_back(input);
     }
+  }
 
-    if(move_node->getNodeByName("Inputs"))
-    {
-      vector<Node*> input_nodes = move_node->getNodeByName("Inputs")->getNodesByName("Input");
-      for(int i=0;i<(int)input_nodes.size();i++)
-      {
-        vector<Node*> button_nodes = input_nodes[0]->getNodesByName("Button");
-        vector<string> input;
-        for(int i=0;i<(int)button_nodes.size();i++)
-        {
-          input.push_back(button_nodes[i]->attributes["name"]);
-        }
-        inputs.push_back(input);
-      }
-    }
-
-    this->restart();
+  this->restart();
 }
 
 void Move::draw(int x, int y, bool flipped)
 {
-    Frame* frame = frames[this->current_frame];
-    frame->draw(x, y, flipped);
+  Frame* frame = frames[this->current_frame];
+  frame->draw(x, y, flipped);
 }
 
 void Move::logic()
 {
-    tick++;
+  tick++;
 
-    Frame* frame = frames[this->current_frame];
-    frame->logic();
+  Frame* frame = frames[this->current_frame];
+  frame->logic();
 
-    if(frame->isFinished())
-    {
-      this->current_frame++;
-      if(current_frame>=(int)frames.size())
-			{
-          current_frame=0;
-          finished=true;
-      }
-      frame = frames[this->current_frame];
-      frame->restart();
-      frame->logic();
+  if(frame->isFinished())
+  {
+    this->current_frame++;
+    if(current_frame>=(int)frames.size())
+		{
+        current_frame=0;
+        finished=true;
     }
+    frame = frames[this->current_frame];
+    frame->restart();
+    frame->logic();
+  }
 }
 
 void Move::restart()
 {
-    tick = 0;
-    current_frame = 0;
-    finished = false;
-    Frame* frame = frames[this->current_frame];
-    frame->restart();
+  tick = 0;
+  current_frame = 0;
+  finished = false;
+  Frame* frame = frames[this->current_frame];
+  frame->restart();
 }
 
 bool Move::isFinished()
 {
-    return finished;
+  return finished;
 }
 
 bool Move::canCancel(string move)
@@ -121,5 +128,5 @@ bool Move::inputIsInBuffer()
 
 Frame* Move::getCurrentFrame()
 {
-    return frames[this->current_frame];
+  return frames[this->current_frame];
 }

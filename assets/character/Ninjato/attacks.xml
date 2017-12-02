@@ -1,5 +1,5 @@
 <Moves>
-  <Move name="punch">
+  <Move name="punch" sound="sounds/punch.ogg">
     <Inputs>
       <Input>
         <Button name="*a"/>

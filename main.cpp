@@ -14,6 +14,17 @@ int main(int argc, char *argv[])
 {
   rosalila()->init();
 
+  //Menu
+  rosalila()->sound->addSound("start_screen",assets_directory + "menu/sounds/start_screen.ogg");
+  rosalila()->sound->addSound("character_select_screen",assets_directory + "menu/sounds/character_select_screen.ogg");
+  rosalila()->sound->addSound("confirm",assets_directory + "menu/sounds/confirm.ogg");
+  rosalila()->sound->addSound("move_cursor",assets_directory + "menu/sounds/move_cursor.ogg");
+
+  //In game
+  rosalila()->sound->addSound("countdown",assets_directory + "misc/sounds/countdown.ogg");
+  rosalila()->sound->addSound("player1_wins",assets_directory + "misc/sounds/player1_wins.ogg");
+  rosalila()->sound->addSound("player2_wins",assets_directory + "misc/sounds/player2_wins.ogg");
+
   Image* background = rosalila()->graphics->getTexture(assets_directory + "menu/character_select_bg.png");
   Image* cursor_player1 = rosalila()->graphics->getTexture(assets_directory + "menu/cursor_player1.png");
   Image* cursor_player2 = rosalila()->graphics->getTexture(assets_directory + "menu/cursor_player2.png");
@@ -64,6 +75,8 @@ int main(int argc, char *argv[])
   string font_path = assets_directory+"misc/font.ttf";
   menu_font = TTF_OpenFont( font_path.c_str(), 28 );
 
+  rosalila()->sound->playSound("character_select_screen", -1, 0, 0, false);
+
   while(true)
   {
     rosalila()->graphics->draw2DImage
@@ -106,6 +119,8 @@ int main(int argc, char *argv[])
            player1_cursor = 0;
         player1_idle_animation_frame = 0;
         player1_idle_animation_image = 0;
+
+        rosalila()->sound->playSound("move_cursor", -1, 0, 0, false);
       }
 
       if((rosalila()->receiver->isKeyPressed('a') && player1_selection == -1)
@@ -116,6 +131,8 @@ int main(int argc, char *argv[])
           player1_cursor = portraits.size()-1;
         player1_idle_animation_frame = 0;
         player1_idle_animation_image = 0;
+
+        rosalila()->sound->playSound("move_cursor", -1, 0, 0, false);
       }
 
       if((rosalila()->receiver->isKeyPressed('l') && player1_selection == -1)
@@ -126,6 +143,8 @@ int main(int argc, char *argv[])
            player2_cursor = 0;
         player2_idle_animation_frame = 0;
         player2_idle_animation_image = 0;
+
+        rosalila()->sound->playSound("move_cursor", -1, 0, 0, false);
       }
 
       if((rosalila()->receiver->isKeyPressed('j') && player1_selection == -1)
@@ -136,17 +155,23 @@ int main(int argc, char *argv[])
           player2_cursor = portraits.size()-1;
         player2_idle_animation_frame = 0;
         player2_idle_animation_image = 0;
+
+        rosalila()->sound->playSound("move_cursor", -1, 0, 0, false);
       }
 
 
       if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w'))
       {
         player1_selection = player1_cursor;
+
+        rosalila()->sound->playSound("confirm", -1, 0, 0, false);
       }
 
       if(rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
       {
         player2_selection = player2_cursor;
+
+        rosalila()->sound->playSound("confirm", -1, 0, 0, false);
       }
 
       if(player1_cursor == i)

@@ -1,5 +1,5 @@
 <Moves>
-  <Move name="on_hit">
+  <Move name="on_hit" sound="sounds/on_hit.ogg">
     <Frames>
       <Frame duration="5" image="on_hit/fighter_1.png" velocity_x="-5">
       </Frame>

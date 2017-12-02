@@ -2,36 +2,39 @@
 
 Character::Character(Footsies* footsies, int player, int x, string name)
 {
-    this->footsies = footsies;
-    this->name = name;
-    this->current_state = "idle";
-    this->frame = 0;
-    this->animation_frame = 0;
-    this->x = x;
-    this->y = 0;
-    this->velocity_x = 0;
-    this->velocity_y = 0;
-    this->acceleration_x = 0;
-    this->acceleration_y = 0;
+  portrait = NULL;
+  this->footsies = footsies;
+  this->name = name;
+  this->current_state = "idle";
+  this->frame = 0;
+  this->animation_frame = 0;
+  this->x = x;
+  this->y = 0;
+  this->velocity_x = 0;
+  this->velocity_y = 0;
+  this->acceleration_x = 0;
+  this->acceleration_y = 0;
 
-    opponent = NULL;
-    this->player = player;
-    game_started = false;
+  opponent = NULL;
+  this->player = player;
+  game_started = false;
 
-    for(int i=0;i<20;i++)
-      input_buffer.push_back("5");
+  for(int i=0;i<20;i++)
+    input_buffer.push_back("5");
 
-    Node* config_node = rosalila()->parser->getNodes(assets_directory+"character/" + this->name + "/config.xml");
-    vector<Node*> files_nodes = config_node->getNodeByName("MoveFiles")->getNodesByName("File");
-    for(int i=0; i< (int)files_nodes.size(); i++)
-    {
-        Node* moves_node = rosalila()->parser->getNodes(assets_directory+"character/" + this->name + "/" + files_nodes[i]->attributes["path"]);
-        vector<Node*> move_nodes = moves_node->getNodesByName("Move");
-        for(int i=0; i< (int)move_nodes.size(); i++)
-        {
-            moves[move_nodes[i]->attributes["name"]] = new Move(this,move_nodes[i]);
-        }
-    }
+  this->portrait = rosalila()->graphics->getTexture(assets_directory + "character/" + this->name + "/portrait.png");
+
+  Node* config_node = rosalila()->parser->getNodes(assets_directory+"character/" + this->name + "/config.xml");
+  vector<Node*> files_nodes = config_node->getNodeByName("MoveFiles")->getNodesByName("File");
+  for(int i=0; i< (int)files_nodes.size(); i++)
+  {
+      Node* moves_node = rosalila()->parser->getNodes(assets_directory+"character/" + this->name + "/" + files_nodes[i]->attributes["path"]);
+      vector<Node*> move_nodes = moves_node->getNodesByName("Move");
+      for(int i=0; i< (int)move_nodes.size(); i++)
+      {
+          moves[move_nodes[i]->attributes["name"]] = new Move(this,move_nodes[i]);
+      }
+  }
 }
 
 void Character::draw()
@@ -89,57 +92,58 @@ void Character::updateBuffer()
 
 void Character::logic()
 {
-      Move* previous_move = moves[this->current_state];
-      if(previous_move->isFinished())
-          cancel("idle");
+  Move* previous_move = moves[this->current_state];
+  if(previous_move->isFinished())
+      cancel("idle");
 
-      updateBuffer();
+  updateBuffer();
 
-      for(map<string,Move*>::iterator move_iterator = moves.begin(); move_iterator != moves.end(); move_iterator++)
-      {
-        string move_name = (*move_iterator).first;
-        Move* move = (*move_iterator).second;
-        if(move->inputIsInBuffer() && move->canCancel(this->current_state))
-          if(game_started)
-            cancel(move_name);
-      }
+  for(map<string,Move*>::iterator move_iterator = moves.begin(); move_iterator != moves.end(); move_iterator++)
+  {
+    string move_name = (*move_iterator).first;
+    Move* move = (*move_iterator).second;
+    if(move->inputIsInBuffer() && move->canCancel(this->current_state))
+      if(game_started)
+        cancel(move_name);
+  }
 
-      velocity_x += acceleration_x;
-      velocity_y += acceleration_y;
+  velocity_x += acceleration_x;
+  velocity_y += acceleration_y;
 
-      int last_y = y;
+  int last_y = y;
 
-      if(this->isFlipped())
-          this->x -= velocity_x;
-      else
-          this->x += velocity_x;
-      this->y += velocity_y;
+  if(this->isFlipped())
+      this->x -= velocity_x;
+  else
+      this->x += velocity_x;
+  this->y += velocity_y;
 
-      if(y<=0 && isInBounds())
-      {
-        y = 0;
-        acceleration_y = 0;
-      }else
-      {
-        acceleration_y-=0.25;
-      }
+  if(y<=0 && isInBounds())
+  {
+    y = 0;
+    acceleration_y = 0;
+  }else
+  {
+    acceleration_y-=0.25;
+  }
 
-      if(last_y > 0 && y == 0)
-      {
-        cancel("idle");
-      }
+  if(last_y > 0 && y == 0)
+  {
+    cancel("idle");
+  }
 
-    Move* current_move = moves[this->current_state];
-    current_move->logic();
+  Move* current_move = moves[this->current_state];
+  current_move->logic();
 }
 
 void Character::cancel(string new_state)
 {
-    this->velocity_x = 0;
-    this->velocity_y = 0;
-    this->current_state=new_state;
-    Move* new_move = moves[current_state];
-    new_move->restart();
+  this->velocity_x = 0;
+  this->velocity_y = 0;
+  this->current_state=new_state;
+  Move* new_move = moves[current_state];
+  new_move->restart();
+  rosalila()->sound->playSound(this->name + "#" + current_state, -1, 0, 0, false);
 }
 
 bool Character::isFlipped()

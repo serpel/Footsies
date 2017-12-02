@@ -31,7 +31,7 @@ public:
     int total_rounds;
     bool game_over;
     int game_over_frames;
-    
+
     vector<Image*> player1_wins_images;
     vector<Image*> player2_wins_images;
     vector<int> win_anim_velocities;
@@ -39,8 +39,14 @@ public:
     int wins_animation_frame;
     int wins_animation_image;
 
+    Image* scoreboard_player1;
+    Image* scoreboard_player2;
+
+    TTF_Font* character_name_font;
+
     Footsies(string character1_name, string character2_name, int total_rounds);
     void gameLoop();
+    void drawScoreboards();
 };
 
 #endif
