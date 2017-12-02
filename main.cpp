@@ -79,9 +79,9 @@ int main(int argc, char *argv[])
 
   vector<Image*> intro_images;
   vector<int> intro_anim_velocities;
-  int intro_animation_velocity;
-  int intro_animation_frame;
-  int intro_animation_image;
+  //int intro_animation_velocity = 4;
+  int intro_animation_frame = 0;
+  int intro_animation_image = 0;
 
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/iddle.png"));
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/1.png"));
@@ -94,10 +94,6 @@ int main(int argc, char *argv[])
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
-
-  intro_animation_velocity = 4;
-  intro_animation_frame = 0;
-  intro_animation_image = 0;
 
   while(true){
 
@@ -116,8 +112,6 @@ int main(int argc, char *argv[])
         FlatShadow()
     );
 
-    rosalila()->update();
-
   intro_animation_frame++;
   if(intro_animation_frame > intro_anim_velocities[intro_animation_image])
   {
@@ -128,6 +122,14 @@ int main(int argc, char *argv[])
         intro_animation_image = 0;
     }
   }
+
+  if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w') ||
+     rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
+  {
+    break;
+  }
+
+  rosalila()->update();
 }
 
   while(true)
