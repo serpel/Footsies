@@ -83,14 +83,14 @@ int main(int argc, char *argv[])
   int intro_animation_frame = 0;
   int intro_animation_image = 0;
 
-  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/iddle.png"));
+  //intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/iddle.png"));
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/1.png"));
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/2.png"));
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/3.png"));
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/4.png"));
   intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/blink.png"));
 
-  intro_anim_velocities.push_back(8);
+  //intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
