@@ -10,6 +10,8 @@
 #include <iostream>
 using namespace std;
 
+bool skipped = false;
+
 void renderContinueScreen(vector<Image*> images, vector<int> intro_anim_velocities, int size, int minAlpha=128, int maxAlpha=255, int speed = 1){
   
   int intro_animation_frame = 0;
@@ -87,8 +89,14 @@ void renderFadeOutAnimation(vector<Image*> images, int size, int speed = 2)
   int aphaChannel = 255;
   int animation_frame = 0;
 
-  while(aphaChannel >= 0)
+  while(aphaChannel >= 0 && skipped == false)
   {
+
+    if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w') ||
+         rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
+    {  
+      skipped = true;
+    }
 
     if(animation_frame >= size){
       animation_frame = 0;
@@ -126,8 +134,14 @@ void renderFadeInAnimation(vector<Image*> images, int size, int speed = 2)
   int aphaChannel = 0;
   int animation_frame = 0;
 
-  while(aphaChannel <= 255)
+  while(aphaChannel <= 255 && skipped == false)
   {
+
+    if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w') ||
+         rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
+    {  
+      skipped = true;
+    }
 
     if(animation_frame >= size){
       animation_frame = 0;
@@ -225,7 +239,7 @@ int main(int argc, char *argv[])
   int p2_ready_currentframe = 0;
 
   vector<string> ready_frame_names = rosalila()->utility->getFileNames(assets_directory + "menu/ready");
-  for(int i = 0; i < ready_frame_names.size(); i++){
+  for(int i = 0; i < (int)ready_frame_names.size(); i++){
     ready_anim.push_back(rosalila()->graphics->getTexture(assets_directory + "menu/ready/" + ready_frame_names[i]));
   }
 
@@ -403,7 +417,7 @@ int main(int argc, char *argv[])
               false,
               FlatShadow());
 
-          if(p1_ready_currentframe < ready_anim.size()-1 ){
+          if(p1_ready_currentframe < (int)ready_anim.size()-1 ){
             p1_ready_framecounter++;
             if(p1_ready_framecounter > ready_timing){
               p1_ready_framecounter = 0;
@@ -449,7 +463,7 @@ int main(int argc, char *argv[])
               false,
               FlatShadow());
 
-          if(p2_ready_currentframe < ready_anim.size()-1 ){
+          if(p2_ready_currentframe < (int)ready_anim.size()-1 ){
             p2_ready_framecounter++;
             if(p2_ready_framecounter > ready_timing){
               p2_ready_framecounter = 0;
@@ -467,7 +481,7 @@ int main(int argc, char *argv[])
       }
     }
 
-    if(p1_ready_currentframe == ready_anim.size()-1 && p2_ready_currentframe == ready_anim.size()-1)
+    if(p1_ready_currentframe == (int)ready_anim.size()-1 && p2_ready_currentframe == (int)ready_anim.size()-1)
     {
       Footsies *footsies = new Footsies(character_directories[player1_selection], character_directories[player2_selection],3);
       footsies->gameLoop();
