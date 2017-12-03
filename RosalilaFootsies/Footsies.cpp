@@ -16,6 +16,14 @@ Footsies::Footsies(string character1_name, string character2_name, int total_rou
   this->game_over_frames = 0;
   this->total_rounds = total_rounds;
 
+  this->character1_name = character1->name;
+  for(short i = 0; i < this->character1_name.length(); ++i)
+    this->character1_name[i] = toupper(this->character1_name[i]);
+
+  this->character2_name = character2->name;
+  for(short i = 0; i < this->character2_name.length(); ++i)
+    this->character2_name[i] = toupper(this->character2_name[i]);
+
   player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/1.png"));
   player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/2.png"));
   player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/3.png"));
@@ -429,8 +437,8 @@ void Footsies::drawScoreboards()
         FlatShadow());
 
   rosalila()->graphics->drawText(rosalila()->utility->toString(player1_wins), player1_scoreboard_x + 183, player1_scoreboard_y + 27, false, false);
-  rosalila()->graphics->drawText(this->character_name_font, character1->name, player1_scoreboard_x + 140, player1_scoreboard_y + 97, false, false);
+  rosalila()->graphics->drawText(this->character_name_font, character1_name, player1_scoreboard_x + 140, player1_scoreboard_y + 97, false, false);
 
   rosalila()->graphics->drawText(rosalila()->utility->toString(player2_wins), player2_scoreboard_x + 75, player2_scoreboard_y + 27, false, false);
-  rosalila()->graphics->drawText(this->character_name_font, character2->name, player2_scoreboard_x + 35, player2_scoreboard_y + 97, false, false);
+  rosalila()->graphics->drawText(this->character_name_font, character2_name, player2_scoreboard_x + 35, player2_scoreboard_y + 97, false, false);
 }

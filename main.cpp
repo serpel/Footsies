@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
   Image* cursor_player1_selected = rosalila()->graphics->getTexture(assets_directory + "menu/cursor_player1_selected.png");
   Image* cursor_player2_selected = rosalila()->graphics->getTexture(assets_directory + "menu/cursor_player2_selected.png");
 
+
   vector<string> character_directories = rosalila()->utility->getDirectoryNames(assets_directory + "character/");
   vector<Image*> portraits;
   vector< vector<Image*> > idle_animations;
@@ -63,6 +64,19 @@ int main(int argc, char *argv[])
         idle_animation_durations.push_back(durations);
       }
     }
+  }
+
+  vector<Image*> ready_anim;
+  int p1_ready_framecounter = 0;
+  int p2_ready_framecounter = 0;
+  int ready_timing = 4;
+
+  int p1_ready_currentframe = 0;
+  int p2_ready_currentframe = 0;
+  
+  vector<string> ready_frame_names = rosalila()->utility->getFileNames(assets_directory + "menu/ready");
+  for(int i = 0; i < ready_frame_names.size(); i++){
+    ready_anim.push_back(rosalila()->graphics->getTexture(assets_directory + "menu/ready/" + ready_frame_names[i]));
   }
 
   int player1_cursor = 0;
@@ -264,7 +278,7 @@ int main(int argc, char *argv[])
               0,0,
               false,
               FlatShadow());
-        else
+        else{
           rosalila()->graphics->draw2DImage
           (   cursor_player1_selected,
               cursor_player1_selected->getWidth(),cursor_player1_selected->getHeight(),
@@ -277,6 +291,22 @@ int main(int argc, char *argv[])
               0,0,
               false,
               FlatShadow());
+
+          if(p1_ready_currentframe < ready_anim.size()-1 ){
+            p1_ready_framecounter++;
+            if(p1_ready_framecounter > ready_timing){
+              p1_ready_framecounter = 0;
+              p1_ready_currentframe ++;
+            }  
+          }
+          
+          rosalila()->graphics->draw2DImage(
+            ready_anim[p1_ready_currentframe],
+            ready_anim[p1_ready_currentframe]->getWidth(), ready_anim[p1_ready_currentframe]->getHeight(),
+            44, 155,
+            1.0, 0.0, false, 0, 0, Color(255, 255, 255, 255), 0, 0, false, FlatShadow()
+          );
+        }
       }
 
       if(player2_cursor == i)
@@ -294,7 +324,7 @@ int main(int argc, char *argv[])
               0,0,
               false,
               FlatShadow());
-        else
+        else{
           rosalila()->graphics->draw2DImage
           (   cursor_player2_selected,
               cursor_player2_selected->getWidth(),cursor_player2_selected->getHeight(),
@@ -307,10 +337,26 @@ int main(int argc, char *argv[])
               0,0,
               false,
               FlatShadow());
+
+          if(p2_ready_currentframe < ready_anim.size()-1 ){
+            p2_ready_framecounter++;
+            if(p2_ready_framecounter > ready_timing){
+              p2_ready_framecounter = 0;
+              p2_ready_currentframe ++;
+            }  
+          }
+          
+          rosalila()->graphics->draw2DImage(
+            ready_anim[p2_ready_currentframe],
+            ready_anim[p2_ready_currentframe]->getWidth(), ready_anim[p2_ready_currentframe]->getHeight(),
+            944, 410,
+            1.0, 0.0, false, 0, 0, Color(255, 255, 255, 255), 0, 0, false, FlatShadow()
+          );
+        }
       }
     }
 
-    if(player1_selection != -1 && player2_selection != -1)
+    if(p1_ready_currentframe == ready_anim.size()-1 && p2_ready_currentframe == ready_anim.size()-1)
     {
       Footsies *footsies = new Footsies(character_directories[player1_selection], character_directories[player2_selection],3);
       footsies->gameLoop();
