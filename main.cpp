@@ -473,6 +473,8 @@ int main(int argc, char *argv[])
       footsies->gameLoop();
       player1_selection = -1;
       player2_selection = -1;
+      p2_ready_currentframe = 0;
+      p1_ready_currentframe = 0;
     }
 
     player1_idle_animation_frame++;

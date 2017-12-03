@@ -118,9 +118,16 @@ void Footsies::gameLoop()
     character1->logic();
     character2->logic();
     stage->draw();
-    character1->draw();
-    character2->draw();
-
+    if(character1->last_attack_frame > character2->last_attack_frame)
+    {
+      character2->draw();
+      character1->draw();
+    }else
+    {
+      character1->draw();
+      character2->draw();
+    }
+    
     this->drawScoreboards();
 
     if(!game_started)
