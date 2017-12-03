@@ -15,6 +15,8 @@ public:
     int stage_boundaries;
     Character *character1;
     Character *character2;
+    std::string character1_name;
+    std::string character2_name;
     Stage *stage;
     int frame;
 
