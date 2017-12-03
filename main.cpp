@@ -97,6 +97,8 @@ int main(int argc, char *argv[])
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
 
+  rosalila()->sound->playMusic(assets_directory + "misc/intro_music.ogg", -1);
+
   while(true){
 
     rosalila()->graphics->draw2DImage
@@ -151,6 +153,8 @@ int main(int argc, char *argv[])
 
   rosalila()->update();
 }
+
+  rosalila()->sound->playMusic(assets_directory + "menu/music.ogg", -1);
 
   while(true)
   {

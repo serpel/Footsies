@@ -82,6 +82,7 @@ Footsies::Footsies(string character1_name, string character2_name, int total_rou
   string font_path = assets_directory+"misc/font.ttf";
   character_name_font = TTF_OpenFont( font_path.c_str(), 15 );
 
+  rosalila()->sound->playMusic(assets_directory+"stages/" + this->stage->name + "/music.ogg", -1);
   rosalila()->sound->playSound("countdown", -1, 0, 0, false);
 }
 
@@ -245,25 +246,30 @@ void Footsies::gameLoop()
         character2->x+=4;
     }
 
-    if(!character1->isInBounds() && !game_over)
-    {
-        character1->cancel("fall");
-        player2_wins++;
-        game_over = true;
+    bool player1_just_won = !character2->isInBounds() && !game_over;
+    bool player2_just_won = !character1->isInBounds() && !game_over;
 
-        counter_animation_frame = 0;
-        counter_animation_image = 0;
-        game_started = false;
-    }
-    if(!character2->isInBounds() && !game_over)
+    if(player1_just_won || player2_just_won)
     {
+      game_over = true;
+      counter_animation_frame = 0;
+      counter_animation_image = 0;
+      game_started = false;
+
+      if(player1_just_won)
+
+      if(player1_just_won)
+      {
         character2->cancel("fall");
-        player1_wins++;
-        game_over = true;
-
-        counter_animation_frame = 0;
-        counter_animation_image = 0;
-        game_started = false;
+        if(!player2_just_won)
+          player1_wins++;
+      }
+      if(player2_just_won)
+      {
+        character1->cancel("fall");
+        if(!player1_just_won)
+          player2_wins++;
+      }
     }
 
     if(game_over)
@@ -388,7 +394,6 @@ void Footsies::drawScoreboards()
       0,0,
       false,
       FlatShadow());
-
   rosalila()->graphics->draw2DImage
   (   scoreboard_player2,
       scoreboard_player2->getWidth(),scoreboard_player2->getHeight(),
@@ -402,18 +407,26 @@ void Footsies::drawScoreboards()
       false,
       FlatShadow());
 
-    rosalila()->graphics->draw2DImage
-    (   character1->portrait,
-        character1->portrait->getWidth(),character1->portrait->getHeight(),
-        player1_scoreboard_x + 24 - 6, player1_scoreboard_y + 18 - 6,
-        1.0,
-        0.0,
-        false,
-        0,0,
-        Color(255,255,255,255),
-        0,0,
-        false,
-        FlatShadow());
+  int portrait1_hit_effect = 255;
+  if(character1->current_state == "on_hit")
+    portrait1_hit_effect = (this->frame*20)%255;
+
+  int portrait2_hit_effect = 255;
+  if(character2->current_state == "on_hit")
+    portrait2_hit_effect = (this->frame*20)%255;
+
+  rosalila()->graphics->draw2DImage
+  (   character1->portrait,
+      character1->portrait->getWidth(),character1->portrait->getHeight(),
+      player1_scoreboard_x + 24 - 6, player1_scoreboard_y + 18 - 6,
+      1.0,
+      0.0,
+      false,
+      0,0,
+      Color(255, portrait1_hit_effect, portrait1_hit_effect, 255),
+      0,0,
+      false,
+      FlatShadow());
 
     rosalila()->graphics->draw2DImage
     (   character2->portrait,
@@ -423,7 +436,7 @@ void Footsies::drawScoreboards()
         0.0,
         false,
         0,0,
-        Color(255,255,255,255),
+        Color(255, portrait2_hit_effect, portrait2_hit_effect, 255),
         0,0,
         false,
         FlatShadow());
