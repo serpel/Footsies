@@ -16,14 +16,14 @@ void renderFadeOutAnimation(vector<Image*> images, int size, int speed = 2)
   int animation_frame = 0;
 
   while(aphaChannel >= 0)
-  {    
+  {
 
     if(animation_frame >= size){
       animation_frame = 0;
     }
 
     rosalila()->graphics->draw2DImage
-    (   
+    (
       images[animation_frame],
       images[animation_frame]->getWidth(),
       images[animation_frame]->getHeight(),
@@ -41,12 +41,12 @@ void renderFadeOutAnimation(vector<Image*> images, int size, int speed = 2)
 
     aphaChannel -= speed;
 
-    animation_frame++; 
+    animation_frame++;
 
-    rosalila()->update();   
-    
+    rosalila()->update();
+
     rosalila()->graphics->clearScreen(Color(0,0,0,255));
-  }    
+  }
 }
 
 void renderFadeInAnimation(vector<Image*> images, int size, int speed = 2)
@@ -55,14 +55,14 @@ void renderFadeInAnimation(vector<Image*> images, int size, int speed = 2)
   int animation_frame = 0;
 
   while(aphaChannel <= 255)
-  {    
+  {
 
     if(animation_frame >= size){
       animation_frame = 0;
     }
 
     rosalila()->graphics->draw2DImage
-    (   
+    (
       images[animation_frame],
       images[animation_frame]->getWidth(),
       images[animation_frame]->getHeight(),
@@ -80,12 +80,12 @@ void renderFadeInAnimation(vector<Image*> images, int size, int speed = 2)
 
     aphaChannel += speed;
 
-    animation_frame++; 
+    animation_frame++;
 
-    rosalila()->update();   
-    
+    rosalila()->update();
+
     rosalila()->graphics->clearScreen(Color(0,0,0,255));
-  }    
+  }
 }
 
 int main(int argc, char *argv[])
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
 
   int p1_ready_currentframe = 0;
   int p2_ready_currentframe = 0;
-  
+
   vector<string> ready_frame_names = rosalila()->utility->getFileNames(assets_directory + "menu/ready");
   for(int i = 0; i < ready_frame_names.size(); i++){
     ready_anim.push_back(rosalila()->graphics->getTexture(assets_directory + "menu/ready/" + ready_frame_names[i]));
@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
   string font_path = assets_directory+"misc/font.ttf";
   menu_font = TTF_OpenFont( font_path.c_str(), 28 );
 
-  rosalila()->sound->playSound("character_select_screen", -1, 0, 0, false);
+  rosalila()->sound->playMusic(assets_directory + "misc/intro_music.ogg", -1);
 
   vector<Image*> intro_images;
   vector<int> intro_anim_velocities;
@@ -204,7 +204,7 @@ int main(int argc, char *argv[])
   renderFadeInAnimation(baka_images, (int)baka_images.size());
   renderFadeOutAnimation(baka_images, (int)baka_images.size());
 
-  rosalila()->sound->playMusic(assets_directory + "misc/intro_music.ogg", -1);
+  rosalila()->sound->playSound("character_select_screen", -1, 0, 0, false);
 
   while(true){
 
@@ -394,9 +394,9 @@ int main(int argc, char *argv[])
             if(p1_ready_framecounter > ready_timing){
               p1_ready_framecounter = 0;
               p1_ready_currentframe ++;
-            }  
+            }
           }
-          
+
           rosalila()->graphics->draw2DImage(
             ready_anim[p1_ready_currentframe],
             ready_anim[p1_ready_currentframe]->getWidth(), ready_anim[p1_ready_currentframe]->getHeight(),
@@ -440,9 +440,9 @@ int main(int argc, char *argv[])
             if(p2_ready_framecounter > ready_timing){
               p2_ready_framecounter = 0;
               p2_ready_currentframe ++;
-            }  
+            }
           }
-          
+
           rosalila()->graphics->draw2DImage(
             ready_anim[p2_ready_currentframe],
             ready_anim[p2_ready_currentframe]->getWidth(), ready_anim[p2_ready_currentframe]->getHeight(),
