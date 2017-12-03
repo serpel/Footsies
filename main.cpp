@@ -10,7 +10,7 @@
 #include <iostream>
 using namespace std;
 
-void renderFadeOutAnimation(vector<Image*> images, int size)
+void renderFadeOutAnimation(vector<Image*> images, int size, int speed = 2)
 {
   int aphaChannel = 255;
   int animation_frame = 0;
@@ -33,15 +33,58 @@ void renderFadeOutAnimation(vector<Image*> images, int size)
       0.0,
       false,
       0,0,
-      Color(255,255,255,aphaChannel--),
+      Color(255,255,255,aphaChannel),
       0,0,
       false,
       FlatShadow()
     );
 
+    aphaChannel -= speed;
+
     animation_frame++; 
 
-    rosalila()->update();    
+    rosalila()->update();   
+    
+    rosalila()->graphics->clearScreen(Color(0,0,0,255));
+  }    
+}
+
+void renderFadeInAnimation(vector<Image*> images, int size, int speed = 2)
+{
+  int aphaChannel = 0;
+  int animation_frame = 0;
+
+  while(aphaChannel <= 255)
+  {    
+
+    if(animation_frame >= size){
+      animation_frame = 0;
+    }
+
+    rosalila()->graphics->draw2DImage
+    (   
+      images[animation_frame],
+      images[animation_frame]->getWidth(),
+      images[animation_frame]->getHeight(),
+      rosalila()->graphics->screen_width/2 - images[animation_frame]->getWidth()/2,
+      rosalila()->graphics->screen_height/2 - images[animation_frame]->getHeight()/2,
+      1.0,
+      0.0,
+      false,
+      0,0,
+      Color(255,255,255,aphaChannel),
+      0,0,
+      false,
+      FlatShadow()
+    );
+
+    aphaChannel += speed;
+
+    animation_frame++; 
+
+    rosalila()->update();   
+    
+    rosalila()->graphics->clearScreen(Color(0,0,0,255));
   }    
 }
 
@@ -148,15 +191,18 @@ int main(int argc, char *argv[])
 
   vector<Image*> modio_images;
   modio_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/modio.png"));
+  renderFadeInAnimation(modio_images, (int)modio_images.size(), 3.5);
   renderFadeOutAnimation(modio_images, (int)modio_images.size());
-
-  vector<Image*> baka_images;
-  baka_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/baka_megane.png"));
-  renderFadeOutAnimation(baka_images, (int)baka_images.size());
 
   vector<Image*> rosalila_images;
   rosalila_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/rosalila.png"));
+  renderFadeInAnimation(rosalila_images, (int)rosalila_images.size(), 3.5);
   renderFadeOutAnimation(rosalila_images, (int)rosalila_images.size());
+
+  vector<Image*> baka_images;
+  baka_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/baka_megane.png"));
+  renderFadeInAnimation(baka_images, (int)baka_images.size());
+  renderFadeOutAnimation(baka_images, (int)baka_images.size());
 
   rosalila()->sound->playMusic(assets_directory + "misc/intro_music.ogg", -1);
 
