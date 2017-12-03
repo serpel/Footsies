@@ -192,17 +192,17 @@ int main(int argc, char *argv[])
   vector<Image*> modio_images;
   modio_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/modio.png"));
   renderFadeInAnimation(modio_images, (int)modio_images.size(), 3.5);
-  renderFadeOutAnimation(modio_images, (int)modio_images.size());
+  renderFadeOutAnimation(modio_images, (int)modio_images.size(), 3);
 
   vector<Image*> rosalila_images;
   rosalila_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/rosalila.png"));
   renderFadeInAnimation(rosalila_images, (int)rosalila_images.size(), 3.5);
-  renderFadeOutAnimation(rosalila_images, (int)rosalila_images.size());
+  renderFadeOutAnimation(rosalila_images, (int)rosalila_images.size(), 3);
 
   vector<Image*> baka_images;
   baka_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/baka_megane.png"));
-  renderFadeInAnimation(baka_images, (int)baka_images.size());
-  renderFadeOutAnimation(baka_images, (int)baka_images.size());
+  renderFadeInAnimation(baka_images, (int)baka_images.size(), 3.5);
+  renderFadeOutAnimation(baka_images, (int)baka_images.size(), 3);
 
   rosalila()->sound->playSound("character_select_screen", -1, 0, 0, false);
 
