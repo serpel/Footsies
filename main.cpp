@@ -10,6 +10,156 @@
 #include <iostream>
 using namespace std;
 
+void renderContinueScreen(vector<Image*> images, vector<int> intro_anim_velocities, int size, int minAlpha=128, int maxAlpha=255, int speed = 1){
+  
+  int intro_animation_frame = 0;
+  int intro_animation_image = 0;
+  //int alpha = minAlpha;
+
+  while(true){  
+        rosalila()->graphics->draw2DImage
+        (   
+          images[intro_animation_image],
+          images[intro_animation_image]->getWidth(),
+          images[intro_animation_image]->getHeight(),
+          rosalila()->graphics->screen_width/2 - images[intro_animation_image]->getWidth()/2,
+          rosalila()->graphics->screen_height/2 - images[intro_animation_image]->getHeight()/2,
+          1.0,
+          0.0,
+          false,
+          0,0,
+          Color(255,255,255,255),
+          0,0,
+          false,
+          FlatShadow()
+        );
+      
+      /*if(alpha < minAlpha || alpha > maxAlpha){
+        speed *= -1;
+      }
+
+      alpha += speed;*/
+    
+      intro_animation_frame++;
+      if(intro_animation_frame > intro_anim_velocities[intro_animation_image])
+      {
+        intro_animation_frame = 0;
+        intro_animation_image++;
+        if(intro_animation_image >= size-1)
+        {
+            intro_animation_image = 0;
+        }
+      }
+    
+      if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w') ||
+         rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
+      {   
+        //blink animation
+        rosalila()->graphics->draw2DImage
+        (   
+          images[size-1],
+          images[size-1]->getWidth(),
+          images[size-1]->getHeight(),
+          rosalila()->graphics->screen_width/2 - images[size-1]->getWidth()/2,
+          rosalila()->graphics->screen_height/2 - images[size-1]->getHeight()/2,
+          1.0,
+          0.0,
+          false,
+          0,0,
+          Color(255,255,255,255),
+          0,0,
+          false,
+          FlatShadow()
+        );
+    
+        rosalila()->update();
+        break;
+      }
+    
+      //rosalila()->graphics->clearScreen(Color(0,0,0,0));
+      
+      rosalila()->update();
+    }
+}
+
+void renderFadeOutAnimation(vector<Image*> images, int size, int speed = 2)
+{
+  int aphaChannel = 255;
+  int animation_frame = 0;
+
+  while(aphaChannel >= 0)
+  {
+
+    if(animation_frame >= size){
+      animation_frame = 0;
+    }
+
+    rosalila()->graphics->draw2DImage
+    (
+      images[animation_frame],
+      images[animation_frame]->getWidth(),
+      images[animation_frame]->getHeight(),
+      rosalila()->graphics->screen_width/2 - images[animation_frame]->getWidth()/2,
+      rosalila()->graphics->screen_height/2 - images[animation_frame]->getHeight()/2,
+      1.0,
+      0.0,
+      false,
+      0,0,
+      Color(255,255,255,aphaChannel),
+      0,0,
+      false,
+      FlatShadow()
+    );
+
+    aphaChannel -= speed;
+
+    animation_frame++;
+
+    rosalila()->update();
+
+    rosalila()->graphics->clearScreen(Color(0,0,0,255));
+  }
+}
+
+void renderFadeInAnimation(vector<Image*> images, int size, int speed = 2)
+{
+  int aphaChannel = 0;
+  int animation_frame = 0;
+
+  while(aphaChannel <= 255)
+  {
+
+    if(animation_frame >= size){
+      animation_frame = 0;
+    }
+
+    rosalila()->graphics->draw2DImage
+    (
+      images[animation_frame],
+      images[animation_frame]->getWidth(),
+      images[animation_frame]->getHeight(),
+      rosalila()->graphics->screen_width/2 - images[animation_frame]->getWidth()/2,
+      rosalila()->graphics->screen_height/2 - images[animation_frame]->getHeight()/2,
+      1.0,
+      0.0,
+      false,
+      0,0,
+      Color(255,255,255,aphaChannel),
+      0,0,
+      false,
+      FlatShadow()
+    );
+
+    aphaChannel += speed;
+
+    animation_frame++;
+
+    rosalila()->update();
+
+    rosalila()->graphics->clearScreen(Color(0,0,0,255));
+  }
+}
+
 int main(int argc, char *argv[])
 {
   rosalila()->init();
@@ -73,7 +223,7 @@ int main(int argc, char *argv[])
 
   int p1_ready_currentframe = 0;
   int p2_ready_currentframe = 0;
-  
+
   vector<string> ready_frame_names = rosalila()->utility->getFileNames(assets_directory + "menu/ready");
   for(int i = 0; i < ready_frame_names.size(); i++){
     ready_anim.push_back(rosalila()->graphics->getTexture(assets_directory + "menu/ready/" + ready_frame_names[i]));
@@ -89,84 +239,41 @@ int main(int argc, char *argv[])
   string font_path = assets_directory+"misc/font.ttf";
   menu_font = TTF_OpenFont( font_path.c_str(), 28 );
 
+  rosalila()->sound->playMusic(assets_directory + "misc/intro_music.ogg", -1);
+
+  vector<Image*> modio_images;
+  modio_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/modio.png"));
+  renderFadeInAnimation(modio_images, (int)modio_images.size(), 3.5);
+  renderFadeOutAnimation(modio_images, (int)modio_images.size(), 3);
+
+  vector<Image*> rosalila_images;
+  rosalila_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/rosalila.png"));
+  renderFadeInAnimation(rosalila_images, (int)rosalila_images.size(), 3.5);
+  renderFadeOutAnimation(rosalila_images, (int)rosalila_images.size(), 3);
+
+  vector<Image*> baka_images;
+  baka_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/splash/baka_megane.png"));
+  renderFadeInAnimation(baka_images, (int)baka_images.size(), 3.5);
+  renderFadeOutAnimation(baka_images, (int)baka_images.size(), 3);
+
   rosalila()->sound->playSound("character_select_screen", -1, 0, 0, false);
 
   vector<Image*> intro_images;
   vector<int> intro_anim_velocities;
-  //int intro_animation_velocity = 4;
-  int intro_animation_frame = 0;
-  int intro_animation_image = 0;
 
-  //intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/iddle.png"));
-  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/1.png"));
-  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/2.png"));
-  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/3.png"));
-  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/4.png"));
-  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/blink.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/loading/1.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/loading/2.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/loading/3.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/loading/4.png"));
+  intro_images.push_back(rosalila()->graphics->getTexture(assets_directory + "intro/loading/blink.png"));
 
-  //intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
   intro_anim_velocities.push_back(8);
 
-  rosalila()->sound->playMusic(assets_directory + "misc/intro_music.ogg", -1);
-
-  while(true){
-
-    rosalila()->graphics->draw2DImage
-    (   intro_images[intro_animation_image],
-        intro_images[intro_animation_image]->getWidth(),intro_images[intro_animation_image]->getHeight(),
-        rosalila()->graphics->screen_width/2 - intro_images[intro_animation_image]->getWidth()/2,
-        rosalila()->graphics->screen_height/2 - intro_images[intro_animation_image]->getHeight()/2,
-        1.0,
-        0.0,
-        false,
-        0,0,
-        Color(255,255,255,255),
-        0,0,
-        false,
-        FlatShadow()
-    );
-
-  intro_animation_frame++;
-  if(intro_animation_frame > intro_anim_velocities[intro_animation_image])
-  {
-    intro_animation_frame = 0;
-    intro_animation_image++;
-    if(intro_animation_image >= (int)intro_images.size()-1)
-    {
-        intro_animation_image = 0;
-    }
-  }
-
-  if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w') ||
-     rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
-  {
-
-    //blink animation
-    rosalila()->graphics->draw2DImage
-    (   intro_images[(int)intro_images.size()-1],
-        intro_images[(int)intro_images.size()-1]->getWidth(),intro_images[(int)intro_images.size()-1]->getHeight(),
-        rosalila()->graphics->screen_width/2 - intro_images[(int)intro_images.size()-1]->getWidth()/2,
-        rosalila()->graphics->screen_height/2 - intro_images[(int)intro_images.size()-1]->getHeight()/2,
-        1.0,
-        0.0,
-        false,
-        0,0,
-        Color(255,255,255,255),
-        0,0,
-        false,
-        FlatShadow()
-    );
-
-    rosalila()->update();
-    break;
-  }
-
-  rosalila()->update();
-}
+  renderContinueScreen(intro_images, intro_anim_velocities, (int)intro_images.size());
 
   rosalila()->sound->playMusic(assets_directory + "menu/music.ogg", -1);
 
@@ -301,9 +408,9 @@ int main(int argc, char *argv[])
             if(p1_ready_framecounter > ready_timing){
               p1_ready_framecounter = 0;
               p1_ready_currentframe ++;
-            }  
+            }
           }
-          
+
           rosalila()->graphics->draw2DImage(
             ready_anim[p1_ready_currentframe],
             ready_anim[p1_ready_currentframe]->getWidth(), ready_anim[p1_ready_currentframe]->getHeight(),
@@ -347,9 +454,9 @@ int main(int argc, char *argv[])
             if(p2_ready_framecounter > ready_timing){
               p2_ready_framecounter = 0;
               p2_ready_currentframe ++;
-            }  
+            }
           }
-          
+
           rosalila()->graphics->draw2DImage(
             ready_anim[p2_ready_currentframe],
             ready_anim[p2_ready_currentframe]->getWidth(), ready_anim[p2_ready_currentframe]->getHeight(),
@@ -366,6 +473,8 @@ int main(int argc, char *argv[])
       footsies->gameLoop();
       player1_selection = -1;
       player2_selection = -1;
+      p2_ready_currentframe = 0;
+      p1_ready_currentframe = 0;
     }
 
     player1_idle_animation_frame++;

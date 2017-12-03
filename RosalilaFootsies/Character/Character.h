@@ -15,6 +15,7 @@ public:
     map< string, Move* > moves;
     string current_state;
     int frame;
+    int last_attack_frame;
     int animation_frame;
     list<string> input_buffer;
 
