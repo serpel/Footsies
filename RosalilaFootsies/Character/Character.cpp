@@ -7,6 +7,7 @@ Character::Character(Footsies* footsies, int player, int x, string name)
   this->name = name;
   this->current_state = "idle";
   this->frame = 0;
+  this->last_attack_frame = 0;
   this->animation_frame = 0;
   this->x = x;
   this->y = 0;
@@ -77,13 +78,17 @@ void Character::updateBuffer()
     input_pressed = "2";
 
   if(rosalila()->receiver->isJoyPressed(1,player))
+  {
     input_pressed += "a";
+  }
   if(rosalila()->receiver->isJoyPressed(2,player))
     input_pressed += "b";
   if(rosalila()->receiver->isJoyPressed(3,player))
     input_pressed += "c";
   if(player == 0 ?  rosalila()->receiver->isKeyPressed('w') : rosalila()->receiver->isKeyPressed('i') )
+  {
     input_pressed += "a";
+  }
 
   input_buffer.pop_back();
   input_buffer.push_front(input_pressed);
@@ -134,16 +139,21 @@ void Character::logic()
 
   Move* current_move = moves[this->current_state];
   current_move->logic();
+
+  this->frame++;
 }
 
 void Character::cancel(string new_state)
 {
+  if(new_state == "punch")
+    this->last_attack_frame = this->frame;
   this->velocity_x = 0;
   this->velocity_y = 0;
   this->current_state=new_state;
   Move* new_move = moves[current_state];
   new_move->restart();
-  rosalila()->sound->playSound(this->name + "#" + current_state, -1, 0, 0, false);
+  if(rosalila()->sound->soundExists(this->name + "#" + current_state))
+    rosalila()->sound->playSound(this->name + "#" + current_state, -1, 0, 0, false);
 }
 
 bool Character::isFlipped()
