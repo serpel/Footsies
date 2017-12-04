@@ -124,7 +124,7 @@ void Footsies::gameLoop()
         {
           break;
         }
-        if(rosalila()->receiver->isJoyPressed(1,0) && rosalila()->receiver->isJoyPressed(1,1))
+        if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isJoyPressed(1,1))
         {
           break;
         }
