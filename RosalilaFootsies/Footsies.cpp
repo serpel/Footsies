@@ -24,6 +24,18 @@ Footsies::Footsies(string character1_name, string character2_name, int total_rou
   for(short i = 0; i < this->character2_name.length(); ++i)
     this->character2_name[i] = toupper(this->character2_name[i]);
 
+  hit_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/hiteffects/1.png"));
+  hit_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/hiteffects/2.png"));
+  hit_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/hiteffects/3.png"));
+
+  hit_animation_velocity = 5;
+  hit_animation_framecounter = 0;
+  hit_current_image = 0;
+  hit_active = false;
+  hit_posx = 0;
+  hit_posy = 0;
+
+
   player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/1.png"));
   player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/2.png"));
   player1_wins_images.push_back(rosalila()->graphics->getTexture(assets_directory + "misc/game_over/player1_wins/3.png"));
@@ -252,7 +264,9 @@ void Footsies::gameLoop()
           rosalila()->sound->playSound(sound_on_connect, -1, 0, 0, false);
 
         rosalila()->graphics->screen_shake_effect.set(20,15,0,0);
-        rosalila()->graphics->point_explosion_effect->explode(character1_hit_x, character1_hit_y, Color(255,0,0,0), 40);
+        hit_posx = character1_hit_x;
+        hit_posy = character1_hit_y;
+        hit_active = true;
     }
     if(character2_hit)
     {
@@ -263,12 +277,37 @@ void Footsies::gameLoop()
           rosalila()->sound->playSound(sound_on_connect, -1, 0, 0, false);
 
         rosalila()->graphics->screen_shake_effect.set(20,15,0,0);
-        rosalila()->graphics->point_explosion_effect->explode(character2_hit_x, character2_hit_y, Color(255,0,0,0), 40);
+        // rosalila()->graphics->point_explosion_effect->explode(character2_hit_x, character2_hit_y, Color(255,0,0,0), 40);
+        hit_posx = character2_hit_x;
+        hit_posy = character2_hit_y;
+        hit_active = true;
     }
     if(hurtbox_collision)
     {
         character1->x-=4;
         character2->x+=4;
+    }
+
+    if(hit_active){
+      hit_animation_framecounter++;
+      if(hit_animation_framecounter > hit_animation_velocity){
+        hit_current_image++;
+        hit_animation_framecounter = 0;
+      }
+
+      if(hit_current_image < (int)hit_images.size()){
+        rosalila()->graphics->draw2DImage(
+          hit_images[hit_current_image],
+          hit_images[hit_current_image]->getWidth(), hit_images[hit_current_image]->getHeight(),
+          hit_posx - (hit_images[hit_current_image]->getWidth()/2),
+          hit_posy - (hit_images[hit_current_image]->getHeight()/2),
+          1.0, 0.0, false, 0, 0, Color(255, 255, 255, 255), 0, 0, false, FlatShadow()
+        );
+      }else{
+        hit_active = false;
+        hit_animation_framecounter = 0;
+        hit_current_image = 0;
+      }
     }
 
     bool player1_just_won = !character2->isInBounds() && !game_over;

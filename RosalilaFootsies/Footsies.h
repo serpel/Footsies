@@ -20,6 +20,15 @@ public:
     Stage *stage;
     int frame;
 
+    //hiteffect
+    vector<Image*> hit_images;
+    int hit_animation_velocity;
+    int hit_animation_framecounter;
+    int hit_current_image;
+    bool hit_active;
+    int hit_posx;
+    int hit_posy;
+
     //counter
     vector<Image*> counter_images;
     vector<int> counter_anim_velocities;
