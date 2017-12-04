@@ -127,7 +127,7 @@ void Footsies::gameLoop()
       character1->draw();
       character2->draw();
     }
-    
+
     this->drawScoreboards();
 
     if(!game_started)
@@ -246,12 +246,22 @@ void Footsies::gameLoop()
     if(character1_hit)
     {
         character1->cancel("on_hit");
+
+        string sound_on_connect = character2->name + "#" + character1->current_state + "#on_connect";
+        if(rosalila()->sound->soundExists(sound_on_connect))
+          rosalila()->sound->playSound(sound_on_connect, -1, 0, 0, false);
+
         rosalila()->graphics->screen_shake_effect.set(20,15,0,0);
         rosalila()->graphics->point_explosion_effect->explode(character1_hit_x, character1_hit_y, Color(255,0,0,0), 40);
     }
     if(character2_hit)
     {
         character2->cancel("on_hit");
+
+        string sound_on_connect = character1->name + "#" + character1->current_state + "#on_connect";
+        if(rosalila()->sound->soundExists(sound_on_connect))
+          rosalila()->sound->playSound(sound_on_connect, -1, 0, 0, false);
+
         rosalila()->graphics->screen_shake_effect.set(20,15,0,0);
         rosalila()->graphics->point_explosion_effect->explode(character2_hit_x, character2_hit_y, Color(255,0,0,0), 40);
     }
