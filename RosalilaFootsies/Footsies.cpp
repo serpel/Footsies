@@ -259,7 +259,7 @@ void Footsies::gameLoop()
     {
         character1->cancel("on_hit");
 
-        string sound_on_connect = character2->name + "#" + character1->current_state + "#on_connect";
+        string sound_on_connect = character2->name + "#" + character2->current_state + "#on_connect";
         if(rosalila()->sound->soundExists(sound_on_connect))
           rosalila()->sound->playSound(sound_on_connect, -1, 0, 0, false);
 
