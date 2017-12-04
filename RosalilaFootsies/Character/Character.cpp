@@ -46,8 +46,8 @@ void Character::draw()
 
 void Character::updateBuffer()
 {
-  bool left_pressed = rosalila()->receiver->isJoyDown(-4,player) || player == 0 ? rosalila()->receiver->isKeyDown('a') : rosalila()->receiver->isKeyDown('j');
-  bool right_pressed = rosalila()->receiver->isJoyDown(-6,player) || player == 0 ? rosalila()->receiver->isKeyDown('d') : rosalila()->receiver->isKeyDown('l');
+  bool left_pressed = (rosalila()->receiver->isJoyDown(-4,player)) || (player == 0 ? rosalila()->receiver->isKeyDown('a') : rosalila()->receiver->isKeyDown('j'));
+  bool right_pressed = (rosalila()->receiver->isJoyDown(-6,player)) || (player == 0 ? rosalila()->receiver->isKeyDown('d') : rosalila()->receiver->isKeyDown('l'));
   bool up_pressed = rosalila()->receiver->isJoyDown(-8,player);
   bool down_pressed = rosalila()->receiver->isJoyDown(-2,player);
 
