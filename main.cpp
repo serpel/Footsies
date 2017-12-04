@@ -15,18 +15,18 @@ int start_text_flashes = 6;
 int start_text_flashcounter = 0;
 
 void renderContinueScreen(vector<Image*> images, vector<int> intro_anim_velocities, int size, int minAlpha=128, int maxAlpha=255, int speed = 1){
-  
+
   bool start_pressed = false;
 
   int intro_animation_frame = 0;
   int intro_animation_image = 0;
   //int alpha = minAlpha;
 
-  while(true){  
+  while(true){
 
         if(!start_pressed){
           rosalila()->graphics->draw2DImage
-          (   
+          (
             images[intro_animation_image],
             images[intro_animation_image]->getWidth(),
             images[intro_animation_image]->getHeight(),
@@ -34,7 +34,7 @@ void renderContinueScreen(vector<Image*> images, vector<int> intro_anim_velociti
             rosalila()->graphics->screen_height/2 - images[intro_animation_image]->getHeight()/2,
             1.0, 0.0, false, 0, 0, Color(255,255,255,255), 0, 0, false, FlatShadow()
           );
-        
+
           intro_animation_frame++;
           if(intro_animation_frame > intro_anim_velocities[intro_animation_image])
           {
@@ -57,7 +57,7 @@ void renderContinueScreen(vector<Image*> images, vector<int> intro_anim_velociti
         }else{
 
           rosalila()->graphics->draw2DImage
-          (   
+          (
             images[intro_animation_image],
             images[intro_animation_image]->getWidth(),
             images[intro_animation_image]->getHeight(),
@@ -71,14 +71,14 @@ void renderContinueScreen(vector<Image*> images, vector<int> intro_anim_velociti
           {
             intro_animation_frame = 0;
             intro_animation_image++;
-            
+
             if(intro_animation_image == size)
             {
                 intro_animation_image = size-2;
                 start_text_flashcounter ++;
             }
           }
-      
+
           if(start_text_flashcounter == start_text_flashes){
             start_text_flashcounter = 0;
             intro_animation_frame = 0;
@@ -89,9 +89,9 @@ void renderContinueScreen(vector<Image*> images, vector<int> intro_anim_velociti
             break;
           }
         }
-    
+
       //rosalila()->graphics->clearScreen(Color(0,0,0,0));
-      
+
       rosalila()->update();
     }
 }
@@ -106,7 +106,7 @@ void renderFadeOutAnimation(vector<Image*> images, int size, int speed = 2)
 
     if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w') ||
          rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
-    {  
+    {
       skipped = true;
     }
 
@@ -151,7 +151,7 @@ void renderFadeInAnimation(vector<Image*> images, int size, int speed = 2)
 
     if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w') ||
          rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
-    {  
+    {
       skipped = true;
     }
 
@@ -502,6 +502,7 @@ int main(int argc, char *argv[])
     {
       Footsies *footsies = new Footsies(character_directories[player1_selection], character_directories[player2_selection],3);
       footsies->gameLoop();
+      rosalila()->sound->playMusic(assets_directory + "menu/music.ogg", -1);
       player1_selection = -1;
       player2_selection = -1;
       p2_ready_currentframe = 0;
