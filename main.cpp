@@ -287,7 +287,7 @@ int main(int argc, char *argv[])
   renderFadeInAnimation(baka_images, (int)baka_images.size(), 3.5);
   renderFadeOutAnimation(baka_images, (int)baka_images.size(), 3);
 
-  rosalila()->sound->playSound("character_select_screen", -1, 0, 0, false);
+  rosalila()->sound->playSound("start_screen", -1, 0, 0, false);
 
   vector<Image*> intro_images;
   vector<int> intro_anim_velocities;
@@ -307,7 +307,7 @@ int main(int argc, char *argv[])
   renderContinueScreen(intro_images, intro_anim_velocities, (int)intro_images.size());
 
   rosalila()->sound->playMusic(assets_directory + "menu/music.ogg", -1);
-
+  rosalila()->sound->playSound("character_select_screen", -1, 0, 0, false);
   while(true)
   {
     rosalila()->graphics->draw2DImage
