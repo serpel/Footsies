@@ -23,11 +23,16 @@ public:
     //hiteffect
     vector<Image*> hit_images;
     int hit_animation_velocity;
-    int hit_animation_framecounter;
-    int hit_current_image;
-    bool hit_active;
-    int hit_posx;
-    int hit_posy;
+    int player1_hit_animation_framecounter;
+    int player2_hit_animation_framecounter;
+    int player1_hit_current_image;
+    int player2_hit_current_image;
+    bool player1_hit_active;
+    bool player2_hit_active;
+    int player1_hit_posx;
+    int player2_hit_posx;
+    int player1_hit_posy;
+    int player2_hit_posy;
 
     //counter
     vector<Image*> counter_images;
