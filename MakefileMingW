@@ -1,7 +1,7 @@
 include Rosalila/Sources.mk
 include Sources.mk
 CC=g++
-CFLAGS=-c -Wall -I ./include
+CFLAGS=-c -Wall -I ./include -I ./include/modio -std=c++11
 LDFLAGS = -L .
 SOURCES=main.cpp  $(ROSALILA_SOURCES) $(ROSALILA_FOOTSIES_SOURCES)
 OBJECTS=$(SOURCES:.cpp=.o)
@@ -10,7 +10,7 @@ EXECUTABLE=Footsies
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ -lopengl32 -lmingw32  lib/libSDL2main.a lib/libSDL2.dll.a lib/libSDL2_image.dll.a lib/libSDL2_mixer.dll.a  lib/libSDL2_ttf.dll.a
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ -lopengl32 -lmingw32  lib/libSDL2main.a lib/libSDL2.dll.a lib/libSDL2_image.dll.a lib/libSDL2_mixer.dll.a  lib/libSDL2_ttf.dll.a lib/libSDL2_net.dll.a lib/libmodio.dll.a
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@

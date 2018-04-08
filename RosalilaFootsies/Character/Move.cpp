@@ -4,17 +4,20 @@ Move::Move(Character* character, Node* move_node)
 {
   this->character = character;
 
+string character_directory = ".modio/mods/";
+//assets_directory + "character/"
+
   if(move_node->hasAttribute("sound"))
   {
     string sound_name = character->name + "#" + move_node->attributes["name"];
-    string sound_path = assets_directory + "character/" + character->name + "/" + move_node->attributes["sound"];
+    string sound_path = character_directory + character->name + "/" + move_node->attributes["sound"];
     rosalila()->sound->addSound(sound_name, sound_path);
   }
   
   if(move_node->hasAttribute("sound_on_connect"))
   {
     string sound_name = character->name + "#" + move_node->attributes["name"] + "#on_connect";
-    string sound_path = assets_directory + "character/" + character->name + "/" + move_node->attributes["sound_on_connect"];
+    string sound_path = character_directory + character->name + "/" + move_node->attributes["sound_on_connect"];
     rosalila()->sound->addSound(sound_name, sound_path);
   }
 

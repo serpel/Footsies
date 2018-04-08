@@ -36,7 +36,7 @@ public:
     Character(Footsies* footsies, int player, int x, string name);
     void draw();
     void updateBuffer();
-    void logic();
+    void logic(string input_pressed);
     void cancel(string new_state);
     bool isFlipped();
     bool isInBounds();

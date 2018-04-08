@@ -37,8 +37,12 @@ void renderContinueScreen(vector<Image*> images, vector<int> intro_anim_velociti
             }
           }
 
-          if(rosalila()->receiver->isJoyPressed(1,0) || rosalila()->receiver->isKeyPressed('w') ||
-            rosalila()->receiver->isKeyPressed('i') || rosalila()->receiver->isJoyPressed(1,1))
+          if(rosalila()->receiver->isJoyPressed(1,0)
+            || rosalila()->receiver->isKeyPressed('w')
+            || rosalila()->receiver->isKeyPressed('i') 
+            || rosalila()->receiver->isJoyPressed(1,1)
+            || rosalila()->receiver->isKeyPressed(SDLK_RETURN)
+            )
           {
             rosalila()->sound->playSound("start_pressed", -1, 0, 0, false);
             start_pressed = true;

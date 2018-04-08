@@ -4,4 +4,5 @@
 	<ScreenSize x="1280" y="720"/>
 	<Fullscreen enabled="no"/>
 	<Font red="255" green="255" blue="255" size="60"/>
+	<Network server_ip="165.227.107.214" server_port="3069" packet_size="512"/>
 </Config>

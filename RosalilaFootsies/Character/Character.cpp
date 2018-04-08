@@ -22,14 +22,16 @@ Character::Character(Footsies* footsies, int player, int x, string name)
 
   for(int i=0;i<20;i++)
     input_buffer.push_back("5");
+string character_directory = ".modio/mods/";
+//assets_directory + "character/"
 
-  this->portrait = rosalila()->graphics->getTexture(assets_directory + "character/" + this->name + "/portrait.png");
+  this->portrait = rosalila()->graphics->getTexture(character_directory + this->name + "/portrait.png");
 
-  Node* config_node = rosalila()->parser->getNodes(assets_directory+"character/" + this->name + "/config.xml");
+  Node* config_node = rosalila()->parser->getNodes(character_directory + this->name + "/config.xml");
   vector<Node*> files_nodes = config_node->getNodeByName("MoveFiles")->getNodesByName("File");
   for(int i=0; i< (int)files_nodes.size(); i++)
   {
-      Node* moves_node = rosalila()->parser->getNodes(assets_directory+"character/" + this->name + "/" + files_nodes[i]->attributes["path"]);
+      Node* moves_node = rosalila()->parser->getNodes(character_directory + this->name + "/" + files_nodes[i]->attributes["path"]);
       vector<Node*> move_nodes = moves_node->getNodesByName("Move");
       for(int i=0; i< (int)move_nodes.size(); i++)
       {
@@ -95,13 +97,34 @@ void Character::updateBuffer()
 
 }
 
-void Character::logic()
+void Character::logic(string input_pressed)
 {
   Move* previous_move = moves[this->current_state];
   if(previous_move->isFinished())
       cancel("idle");
 
-  updateBuffer();
+  if(input_pressed == "")
+  {
+    input_pressed = input_buffer.front();
+  }
+
+  if(input_pressed == "a")
+  {
+    input_pressed = "5a";
+  }
+
+  if(this->isFlipped())
+  {
+    if(input_pressed == "6")
+      input_pressed = "4";
+    else if(input_pressed == "4")
+      input_pressed = "6";      
+  }
+
+  //updateBuffer();
+
+  input_buffer.pop_back();
+  input_buffer.push_front(input_pressed);
 
   for(map<string,Move*>::iterator move_iterator = moves.begin(); move_iterator != moves.end(); move_iterator++)
   {

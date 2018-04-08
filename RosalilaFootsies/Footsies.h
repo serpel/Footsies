@@ -5,6 +5,9 @@
 #include "Character/Move.h"
 #include "Character/Frame.h"
 #include "Stage/Stage.h"
+#include "modio/modio.h"
+
+extern modio::Instance* modio_instance;
 
 class Character;
 
@@ -45,6 +48,8 @@ public:
     int player1_wins;
     int player2_wins;
     int total_rounds;
+    string game_type;
+    int player;
     bool game_over;
     int game_over_frames;
 
@@ -60,7 +65,7 @@ public:
 
     TTF_Font* character_name_font;
 
-    Footsies(string character1_name, string character2_name, int total_rounds);
+    Footsies(string character1_name, string character2_name, int total_rounds, string game_type, int player);
     void gameLoop();
     void drawScoreboards();
 };
