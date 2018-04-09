@@ -1,68 +1,20 @@
 One Punch Fighter
 =================
 
-Easy to learn, hard to master adrenaline packed 2D pixel art fighting game. Focused on yomi by use of just one attack button game mechanic.
+One attack button 2d pixel art fighting game.
 
 ## Keywords
 
-This engine is being developed with the following values ordered by importance:
+This game is being developed with the following values ordered by importance:
 
-1. **TODO**: TODO
+1. **Competitive**: Focused on yomi.
+2. **Simplicity**: Easy to learn, hard to master.
+3. **Pixel art**: Unique art style inspired by retro games.
 
 ## Features
 
-* **TODO**: Todo
-
-
-## Dev environment
-
-### Linux 
-
-**Step 1:**  Install devepencies
-```sh
-sudo apt-get install build-essential 
-```
-
-**Step 2:**  Clone the repository
-```sh
-git clone https://github.com/serpel/OnePunchFighter
-cd OnePunchFighter
-```
-
-**Step 3:**  Create the rosalila engine dir
-```sh
-mkdir rosalila
-cd rosalila
-git clone https://github.com/Rosalila/RosalilaEngine
-```
-
-**Step 4:**  Build rosalila engine
-```sh
-cd rosalila
-make
-```
-
-**Step 5:**  Build OnePunchFighter
-```sh
-cd ..
-make
-```
-
-**Step 6:**  Run 
-```sh
-./Footsies
-```
-
-## Contributing
-
-```sh
-Fork it
-
-Create your feature branch (git checkout -b my-new-feature)
-
-Commit your changes (git commit -am 'Add some feature')
-
-Push to the branch (git push origin my-new-feature)
-
-Create a new Pull Request
-```
+* **Roster**: 5 unique characters and 3 different stages avaliables.
+* **Local multiplayer**: Play against other players locally.
+* **AI**: Play against a CPU with artifial intelligence.
+* **Netplay**: Play against other players online.
+* **Moddable**: Create, browse and install mods.
